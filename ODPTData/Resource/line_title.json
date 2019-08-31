@@ -1,0 +1,17 @@
+{"ToyoRapid.ToyoRapid":{"ja":"東葉高速線","en":"Toyo Rapid Line"},
+    "TokyoMetro.ChiyodaBranch":{"ja":"千代田", "en":"Chiyoda"},
+    "MIR.TsukubaExpress":{"ja":"つくばエクスプレス", "en":"Tsukuba Express"},
+    "TokyoMonorail.HanedaAirport":{"ja":"東京モノレール","en":"Tokyo Monorail"},
+    "SaitamaRailway.SaitamaRailway":{"ja":"埼玉高速鉄道線","en":"Saitama Railway Line"},
+    "Minatomirai.Minatomirai":{"ja":"みなとみらい線","en":"Minatomirai Line"},
+    "HakoneTozan.HakoneTozan":{"ja":"箱根登山線","en":"Hakone-Tozan Line"},
+    "Chichibu.Chichibu":{"ja":"秩父本線","en":"Chichibu Line"},
+    "JR-East.Joetsu":{"ja":"上越線","en":"Joetsu Line"},
+    "JR-East.HokurikuShinkansen":{"ja":"北陸新幹線","en":"Hokuriku Shinkansen"},
+    "JR-East.TohokuShinkansen":{"ja":"東北新幹線","en":"Tohoku Shinkansen"},
+    "JR-East.AkitaShinkansen":{"ja":"秋田新幹線","en":"Akita Shinkansen"},
+    "JR-East.YamagataShinkansen":{"ja":"山形新幹線","en":"Yamagata Shinkansen"},
+    "JR-East.JoetsuShinkansen":{"ja":"上越新幹線","en":"Joetsu Shinkansen"},
+    "Hokuso.Hokuso":{"ja":"北総線","en":"Hokuso Line"},
+    "ShinKeisei.ShinKeisei":{"ja":"新京成線","en":"Shin Keisei Line"}
+}

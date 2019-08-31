@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.98" systemVersion="18E226" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="Branch" representedClassName="NSManagedObject" syncable="YES">
+        <attribute name="atStation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ofLine" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="selectedLine" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="systemDefault" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="parentTransfer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Transfer" inverseName="branchData" inverseEntity="Transfer" syncable="YES"/>
+    </entity>
+    <entity name="DisplaySetting" representedClassName="DisplaySetting" syncable="YES" codeGenerationType="class">
+        <attribute name="isShowBus" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isShowRailway" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
+    <entity name="Place" representedClassName="Place" syncable="YES" codeGenerationType="class">
+        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="index" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isOrigin" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="title" attributeType="String" syncable="YES"/>
+        <attribute name="visible" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
+    <entity name="Transfer" representedClassName="Transfer" syncable="YES" codeGenerationType="class">
+        <attribute name="departureStation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="departureStationDuplication" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="destinationStation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="destinationStationDuplication" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isLineReverse" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="line" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="reverseLine" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="branchData" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Branch" inverseName="parentTransfer" inverseEntity="Branch" syncable="YES"/>
+        <relationship name="parentSet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TransferSet" inverseName="transfers" inverseEntity="TransferSet" syncable="YES"/>
+    </entity>
+    <entity name="TransferSet" representedClassName="TransferSet" syncable="YES" codeGenerationType="class">
+        <attribute name="current" optional="YES" attributeType="Boolean" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="transfers" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Transfer" inverseName="parentSet" inverseEntity="Transfer" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Branch" positionX="-63" positionY="-18" width="128" height="120"/>
+        <element name="DisplaySetting" positionX="-63" positionY="45" width="128" height="75"/>
+        <element name="Place" positionX="-63" positionY="9" width="128" height="150"/>
+        <element name="Transfer" positionX="-63" positionY="45" width="128" height="195"/>
+        <element name="TransferSet" positionX="-54" positionY="54" width="128" height="90"/>
+    </elements>
+</model>

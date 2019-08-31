@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.98" systemVersion="18G84" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="Calendar" representedClassName="NSManagedObject" syncable="YES">
+        <attribute name="day" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="duration" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="operator" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title_en" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title_ja" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="timetableLines" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TimetableLine" inverseName="calendar" inverseEntity="TimetableLine" syncable="YES"/>
+        <relationship name="timetableStations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TimetableStation" inverseName="calendar" inverseEntity="TimetableStation" syncable="YES"/>
+    </entity>
+    <entity name="ConnectingLine" representedClassName="NSManagedObject" syncable="YES">
+        <attribute name="atStation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="station" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="Station" inverseName="connectingLines" inverseEntity="Station" syncable="YES"/>
+    </entity>
+    <entity name="Line" representedClassName="NSManagedObject" syncable="YES">
+        <attribute name="circulation" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="color" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="directConnectingStationNumbers" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="direction" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="duplication" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="familyIdentifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fetchDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="identifier" attributeType="String" syncable="YES"/>
+        <attribute name="operator" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="stationOrder" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title_en" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title_ja" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="directConnectingFromLines" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Line" inverseName="directConnectingToLines" inverseEntity="Line" syncable="YES"/>
+        <relationship name="directConnectingToLines" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Line" inverseName="directConnectingFromLines" inverseEntity="Line" syncable="YES"/>
+        <relationship name="reverseDirectionLine" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Line" inverseName="reverseDirectionLine" inverseEntity="Line" syncable="YES"/>
+        <relationship name="stations" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Station" inverseName="lines" inverseEntity="Station" syncable="YES"/>
+    </entity>
+    <entity name="LineInformation" representedClassName="NSManagedObject" syncable="YES">
+        <attribute name="bound_en" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bound_ja" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="cause_en" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="cause_ja" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fetchDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="lineIdentifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="originDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="status_en" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status_ja" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="text_en" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="text_ja" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="validDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+    </entity>
+    <entity name="Operator" representedClassName="NSManagedObject" syncable="YES">
+        <attribute name="fetchDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title_en" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title_ja" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Point" representedClassName="NSManagedObject" syncable="YES">
+        <attribute name="fetchDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="isContainBus" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isContainRailway" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="latitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="longitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="searchRadius" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="nearStations" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Station" inverseName="nearPoints" inverseEntity="Station" syncable="YES"/>
+    </entity>
+    <entity name="Station" representedClassName="NSManagedObject" syncable="YES">
+        <attribute name="busstopPoleNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="connectingRadius" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="fetchDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="identifier" attributeType="String" syncable="YES"/>
+        <attribute name="isValidConnectingLines" attributeType="Integer 16" defaultValueString="-1" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="-1" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="-1" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="operator" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="stationCode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title_en" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title_ja" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="connectingLines" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ConnectingLine" inverseName="station" inverseEntity="ConnectingLine" syncable="YES"/>
+        <relationship name="lines" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Line" inverseName="stations" inverseEntity="Line" syncable="YES"/>
+        <relationship name="nearPoints" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Point" inverseName="nearStations" inverseEntity="Point" syncable="YES"/>
+    </entity>
+    <entity name="TimetableLine" representedClassName="NSManagedObject" syncable="YES">
+        <attribute name="ofLine" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="calendar" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Calendar" inverseName="timetableLines" inverseEntity="Calendar" syncable="YES"/>
+        <relationship name="parentSet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TimetableLineSet" inverseName="timetableLines" inverseEntity="TimetableLineSet" syncable="YES"/>
+        <relationship name="vehicles" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="TimetableVehicle" inverseName="array" inverseEntity="TimetableVehicle" syncable="YES"/>
+    </entity>
+    <entity name="TimetableLineSet" representedClassName="NSManagedObject" syncable="YES">
+        <attribute name="fetchDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="ofLine" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="timetableLines" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TimetableLine" inverseName="parentSet" inverseEntity="TimetableLine" syncable="YES"/>
+    </entity>
+    <entity name="TimetableStation" representedClassName="NSManagedObject" syncable="YES">
+        <attribute name="atStation" attributeType="String" syncable="YES"/>
+        <attribute name="hourIndexForSearch" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="ofLine" attributeType="String" syncable="YES"/>
+        <relationship name="calendar" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Calendar" inverseName="timetableStations" inverseEntity="Calendar" syncable="YES"/>
+        <relationship name="parentSet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TimetableStationSet" inverseName="timetableStations" inverseEntity="TimetableStationSet" syncable="YES"/>
+        <relationship name="records" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="TimetableStationRecord" inverseName="timetableStation" inverseEntity="TimetableStationRecord" syncable="YES"/>
+    </entity>
+    <entity name="TimetableStationRecord" representedClassName="NSManagedObject" syncable="YES">
+        <attribute name="destination" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="index" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="timeHour" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="timeMinute" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="timeSecond" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="trainNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="trainType" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="timetableStation" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="TimetableStation" inverseName="records" inverseEntity="TimetableStation" syncable="YES"/>
+    </entity>
+    <entity name="TimetableStationSet" representedClassName="NSManagedObject" syncable="YES">
+        <attribute name="atStation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ofLine" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="timetableStations" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TimetableStation" inverseName="parentSet" inverseEntity="TimetableStation" syncable="YES"/>
+    </entity>
+    <entity name="TimetableVehicle" representedClassName="NSManagedObject" syncable="YES">
+        <attribute name="dayType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="index" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="ofLine" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startingStation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="terminalStation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="trainNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="trainType" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="array" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TimetableLine" inverseName="vehicles" inverseEntity="TimetableLine" syncable="YES"/>
+        <relationship name="records" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="TimetableVehicleRecord" inverseName="timetableVehicle" inverseEntity="TimetableVehicleRecord" syncable="YES"/>
+    </entity>
+    <entity name="TimetableVehicleRecord" representedClassName="NSManagedObject" syncable="YES">
+        <attribute name="atStation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="index" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isArrival" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="timeHour" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="timeMinute" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="timeSecond" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="timetableVehicle" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TimetableVehicle" inverseName="records" inverseEntity="TimetableVehicle" syncable="YES"/>
+    </entity>
+    <entity name="TrainLocation" representedClassName="NSManagedObject" syncable="YES">
+        <attribute name="delay" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="fromStation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startingStation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="terminalStation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="toStation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="trainNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="array" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TrainLocationArray" inverseName="locations" inverseEntity="TrainLocationArray" syncable="YES"/>
+    </entity>
+    <entity name="TrainLocationArray" representedClassName="NSManagedObject" syncable="YES">
+        <attribute name="fetchDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="ofLine" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="validDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="locations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TrainLocation" inverseName="array" inverseEntity="TrainLocation" syncable="YES"/>
+    </entity>
+    <entity name="TrainType" representedClassName="NSManagedObject" syncable="YES">
+        <attribute name="fetchDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="operator" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title_en" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title_ja" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Calendar" positionX="-498.7421875" positionY="-320.71875" width="128" height="165"/>
+        <element name="ConnectingLine" positionX="29.28515625" positionY="-283.30859375" width="128" height="90"/>
+        <element name="Line" positionX="-180.8671875" positionY="-427.39453125" width="128" height="285"/>
+        <element name="LineInformation" positionX="416.37890625" positionY="-451.4296875" width="128" height="225"/>
+        <element name="Operator" positionX="420.53515625" positionY="-179.20703125" width="128" height="105"/>
+        <element name="Point" positionX="-118.9765625" positionY="16.87109375" width="128" height="150"/>
+        <element name="Station" positionX="252" positionY="-243" width="128" height="270"/>
+        <element name="TimetableLine" positionX="-29.2734375" positionY="188.3203125" width="128" height="105"/>
+        <element name="TimetableLineSet" positionX="-224.86328125" positionY="284.2109375" width="128" height="88"/>
+        <element name="TimetableStation" positionX="-617.10546875" positionY="88.125" width="128" height="135"/>
+        <element name="TimetableStationRecord" positionX="-387.453125" positionY="244.796875" width="128" height="180"/>
+        <element name="TimetableStationSet" positionX="-810.92578125" positionY="90.1015625" width="128" height="90"/>
+        <element name="TimetableVehicle" positionX="155.76171875" positionY="131.37890625" width="128" height="180"/>
+        <element name="TimetableVehicleRecord" positionX="328.40234375" positionY="185.26953125" width="128" height="150"/>
+        <element name="TrainLocation" positionX="178.78125" positionY="-464.1953125" width="128" height="150"/>
+        <element name="TrainLocationArray" positionX="-11.875" positionY="-448.60546875" width="128" height="105"/>
+        <element name="TrainType" positionX="429.5390625" positionY="-35.80859375" width="128" height="120"/>
+    </elements>
+</model>

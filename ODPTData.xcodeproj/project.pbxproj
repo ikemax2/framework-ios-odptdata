@@ -7,9 +7,90 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		391460F62306DC96003D9FCA /* ODPTDataConstant.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40F112305854400542F1A /* ODPTDataConstant.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3964C4C623100E690023DE58 /* TestRightAnswerContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3964C4C523100E690023DE58 /* TestRightAnswerContainer.m */; };
 		39F40E4E2305488200542F1A /* ODPTData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39F40E442305488200542F1A /* ODPTData.framework */; };
 		39F40E532305488200542F1A /* ODPTDataTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40E522305488200542F1A /* ODPTDataTests.m */; };
 		39F40E552305488200542F1A /* ODPTData.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40E472305488200542F1A /* ODPTData.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		39F40E642305491700542F1A /* ODPTDataProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40E5F2305491700542F1A /* ODPTDataProvider.h */; };
+		39F40E652305491700542F1A /* ODPTDataProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40E602305491700542F1A /* ODPTDataProvider.m */; };
+		39F40E662305491700542F1A /* ODPTDataProviderSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40E612305491700542F1A /* ODPTDataProviderSession.m */; };
+		39F40E682305491700542F1A /* ODPTDataProviderSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40E632305491700542F1A /* ODPTDataProviderSession.h */; };
+		39F40E8A2305494B00542F1A /* ODPTDataLoaderConnectingLines.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40E6A2305494800542F1A /* ODPTDataLoaderConnectingLines.h */; };
+		39F40E8B2305494B00542F1A /* ODPTDataController+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40E6B2305494800542F1A /* ODPTDataController+Common.m */; };
+		39F40E8C2305494B00542F1A /* ODPTDataLoaderOperator.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40E6C2305494800542F1A /* ODPTDataLoaderOperator.h */; };
+		39F40E8D2305494B00542F1A /* ODPTDataController+Common.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40E6D2305494800542F1A /* ODPTDataController+Common.h */; };
+		39F40E8E2305494B00542F1A /* ODPTDataLoaderStation.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40E6E2305494800542F1A /* ODPTDataLoaderStation.h */; };
+		39F40E8F2305494B00542F1A /* ODPTDataLoaderLine.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40E6F2305494800542F1A /* ODPTDataLoaderLine.h */; };
+		39F40E902305494B00542F1A /* ODPTDataAdditional.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40E702305494800542F1A /* ODPTDataAdditional.h */; };
+		39F40E912305494B00542F1A /* ODPTDataLoaderCalendar.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40E712305494800542F1A /* ODPTDataLoaderCalendar.h */; };
+		39F40E922305494B00542F1A /* ODPTDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40E722305494800542F1A /* ODPTDataController.m */; };
+		39F40E932305494B00542F1A /* ODPTDataLoaderStation.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40E732305494800542F1A /* ODPTDataLoaderStation.m */; };
+		39F40E942305494B00542F1A /* ODPTDataAdditional.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40E742305494800542F1A /* ODPTDataAdditional.m */; };
+		39F40E952305494B00542F1A /* ODPTDataLoaderPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40E752305494800542F1A /* ODPTDataLoaderPoint.m */; };
+		39F40E962305494B00542F1A /* ODPTDataController.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40E762305494800542F1A /* ODPTDataController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		39F40E972305494B00542F1A /* ODPTDataLoaderTimetableStation.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40E772305494800542F1A /* ODPTDataLoaderTimetableStation.m */; };
+		39F40E982305494B00542F1A /* ODPTDataLoaderArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40E782305494800542F1A /* ODPTDataLoaderArray.h */; };
+		39F40E992305494B00542F1A /* ODPTDataLoaderTrainLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40E792305494800542F1A /* ODPTDataLoaderTrainLocation.m */; };
+		39F40E9A2305494B00542F1A /* ODPTDataLoaderLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40E7A2305494900542F1A /* ODPTDataLoaderLine.m */; };
+		39F40E9B2305494B00542F1A /* ODPTDataLoaderOperator.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40E7B2305494900542F1A /* ODPTDataLoaderOperator.m */; };
+		39F40E9C2305494B00542F1A /* ODPTDataLoaderPoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40E7C2305494900542F1A /* ODPTDataLoaderPoint.h */; };
+		39F40E9D2305494B00542F1A /* ODPTDataLoaderLineInformation.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40E7D2305494900542F1A /* ODPTDataLoaderLineInformation.h */; };
+		39F40E9E2305494B00542F1A /* ODPTDataLoaderTimetableLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40E7E2305494900542F1A /* ODPTDataLoaderTimetableLine.m */; };
+		39F40E9F2305494B00542F1A /* ODPTDataLoaderArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40E7F2305494900542F1A /* ODPTDataLoaderArray.m */; };
+		39F40EA02305494B00542F1A /* ODPTDataLoaderLineInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40E802305494900542F1A /* ODPTDataLoaderLineInformation.m */; };
+		39F40EA12305494B00542F1A /* ODPTDataLoaderConnectingLines.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40E812305494900542F1A /* ODPTDataLoaderConnectingLines.m */; };
+		39F40EA22305494B00542F1A /* ODPTDataLoaderTimetableLine.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40E822305494900542F1A /* ODPTDataLoaderTimetableLine.h */; };
+		39F40EA32305494B00542F1A /* ODPTDataLoaderTrainType.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40E832305494900542F1A /* ODPTDataLoaderTrainType.m */; };
+		39F40EA42305494B00542F1A /* ODPTDataLoaderTrainLocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40E842305494A00542F1A /* ODPTDataLoaderTrainLocation.h */; };
+		39F40EA52305494B00542F1A /* ODPTDataLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40E852305494A00542F1A /* ODPTDataLoader.h */; };
+		39F40EA62305494B00542F1A /* ODPTDataLoaderTimetableStation.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40E862305494A00542F1A /* ODPTDataLoaderTimetableStation.h */; };
+		39F40EA72305494B00542F1A /* ODPTDataLoaderTrainType.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40E872305494A00542F1A /* ODPTDataLoaderTrainType.h */; };
+		39F40EA82305494B00542F1A /* ODPTDataLoaderCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40E882305494A00542F1A /* ODPTDataLoaderCalendar.m */; };
+		39F40EA92305494B00542F1A /* ODPTDataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40E892305494B00542F1A /* ODPTDataLoader.m */; };
+		39F40EBA2305499E00542F1A /* holidays.json in Resources */ = {isa = PBXBuildFile; fileRef = 39F40EAB2305499D00542F1A /* holidays.json */; };
+		39F40EBB2305499E00542F1A /* line_information_status_en.json in Resources */ = {isa = PBXBuildFile; fileRef = 39F40EAC2305499D00542F1A /* line_information_status_en.json */; };
+		39F40EBC2305499E00542F1A /* operator_header_en.json in Resources */ = {isa = PBXBuildFile; fileRef = 39F40EAD2305499D00542F1A /* operator_header_en.json */; };
+		39F40EBD2305499E00542F1A /* direct_connecting_line.json in Resources */ = {isa = PBXBuildFile; fileRef = 39F40EAE2305499D00542F1A /* direct_connecting_line.json */; };
+		39F40EBE2305499E00542F1A /* inaccessible_railway.json in Resources */ = {isa = PBXBuildFile; fileRef = 39F40EAF2305499D00542F1A /* inaccessible_railway.json */; };
+		39F40EBF2305499E00542F1A /* other_stationDict.json in Resources */ = {isa = PBXBuildFile; fileRef = 39F40EB02305499D00542F1A /* other_stationDict.json */; };
+		39F40EC02305499E00542F1A /* line_information_level.json in Resources */ = {isa = PBXBuildFile; fileRef = 39F40EB12305499D00542F1A /* line_information_level.json */; };
+		39F40EC12305499E00542F1A /* line_title.json in Resources */ = {isa = PBXBuildFile; fileRef = 39F40EB22305499D00542F1A /* line_title.json */; };
+		39F40EC22305499E00542F1A /* operator_header_ja.json in Resources */ = {isa = PBXBuildFile; fileRef = 39F40EB32305499D00542F1A /* operator_header_ja.json */; };
+		39F40EC32305499E00542F1A /* connect_station.json in Resources */ = {isa = PBXBuildFile; fileRef = 39F40EB42305499D00542F1A /* connect_station.json */; };
+		39F40EC42305499E00542F1A /* station_order_for_line.json in Resources */ = {isa = PBXBuildFile; fileRef = 39F40EB52305499E00542F1A /* station_order_for_line.json */; };
+		39F40EC72305499E00542F1A /* line_color.json in Resources */ = {isa = PBXBuildFile; fileRef = 39F40EB82305499E00542F1A /* line_color.json */; };
+		39F40EC82305499E00542F1A /* line_direction.json in Resources */ = {isa = PBXBuildFile; fileRef = 39F40EB92305499E00542F1A /* line_direction.json */; };
+		39F40EDD230549DE00542F1A /* CoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40ECA230549DD00542F1A /* CoreDataManager.m */; };
+		39F40EDE230549DE00542F1A /* UserDataModel_1_2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 39F40ECB230549DD00542F1A /* UserDataModel_1_2.xcmappingmodel */; };
+		39F40EDF230549DE00542F1A /* UserDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 39F40ECC230549DD00542F1A /* UserDataModel.xcdatamodeld */; };
+		39F40EE0230549DE00542F1A /* MigrationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40ED1230549DD00542F1A /* MigrationManager.h */; };
+		39F40EE1230549DE00542F1A /* EfficientLoaderQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40ED2230549DD00542F1A /* EfficientLoaderQueue.m */; };
+		39F40EE3230549DE00542F1A /* APIModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 39F40ED4230549DD00542F1A /* APIModel.xcdatamodeld */; };
+		39F40EE4230549DE00542F1A /* EfficientLoaderQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40ED6230549DD00542F1A /* EfficientLoaderQueue.h */; };
+		39F40EE5230549DE00542F1A /* EfficientLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40ED7230549DD00542F1A /* EfficientLoader.h */; };
+		39F40EE6230549DE00542F1A /* UserDataModel_3_4.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 39F40ED8230549DD00542F1A /* UserDataModel_3_4.xcmappingmodel */; };
+		39F40EE7230549DE00542F1A /* UserDataModel_2_3.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 39F40ED9230549DD00542F1A /* UserDataModel_2_3.xcmappingmodel */; };
+		39F40EE8230549DE00542F1A /* MigrationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40EDA230549DD00542F1A /* MigrationManager.m */; };
+		39F40EE9230549DE00542F1A /* EfficientLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40EDB230549DD00542F1A /* EfficientLoader.m */; };
+		39F40EEA230549DE00542F1A /* CoreDataManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40EDC230549DD00542F1A /* CoreDataManager.h */; };
+		39F40EED2305502500542F1A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 39F40EEF2305502500542F1A /* Localizable.strings */; };
+		39F40EFB23057D1A00542F1A /* ODPTDataController+Timetable.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40EF923057D1A00542F1A /* ODPTDataController+Timetable.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		39F40EFC23057D1A00542F1A /* ODPTDataController+Timetable.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40EFA23057D1A00542F1A /* ODPTDataController+Timetable.m */; };
+		39F40EFF23057FA100542F1A /* ODPTDataController+Place.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40EFD23057FA100542F1A /* ODPTDataController+Place.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		39F40F0023057FA100542F1A /* ODPTDataController+Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40EFE23057FA100542F1A /* ODPTDataController+Place.m */; };
+		39F40F032305803D00542F1A /* ODPTDataController+Migration.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40F012305803D00542F1A /* ODPTDataController+Migration.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		39F40F042305803D00542F1A /* ODPTDataController+Migration.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40F022305803D00542F1A /* ODPTDataController+Migration.m */; };
+		39F40F07230580D600542F1A /* ODPTDataController+Setting.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40F05230580D600542F1A /* ODPTDataController+Setting.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		39F40F08230580D600542F1A /* ODPTDataController+Setting.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40F06230580D600542F1A /* ODPTDataController+Setting.m */; };
+		39F40F0B2305820600542F1A /* ODPTDataController+LineAndStation.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40F092305820600542F1A /* ODPTDataController+LineAndStation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		39F40F0C2305820600542F1A /* ODPTDataController+LineAndStation.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40F0A2305820600542F1A /* ODPTDataController+LineAndStation.m */; };
+		39F40F0F230583EC00542F1A /* ODPTDataController+Dynamic.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40F0D230583EC00542F1A /* ODPTDataController+Dynamic.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		39F40F10230583EC00542F1A /* ODPTDataController+Dynamic.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40F0E230583EC00542F1A /* ODPTDataController+Dynamic.m */; };
+		39F40F142305888700542F1A /* ODPTDataTestsFetch.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40F132305888700542F1A /* ODPTDataTestsFetch.m */; };
+		39F40F1723065AEA00542F1A /* ODPTDataTests+Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40F1623065AEA00542F1A /* ODPTDataTests+Controller.m */; };
+		39F40F1B23065C2800542F1A /* ODPTDataTests+Loader.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40F1A23065C2800542F1A /* ODPTDataTests+Loader.m */; };
+		39F40F2A2306AEE700542F1A /* ODPTDataTests+Provider.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40F292306AEE700542F1A /* ODPTDataTests+Provider.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -23,12 +104,104 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3964C4C423100E690023DE58 /* TestRightAnswerContainer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestRightAnswerContainer.h; sourceTree = "<group>"; };
+		3964C4C523100E690023DE58 /* TestRightAnswerContainer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestRightAnswerContainer.m; sourceTree = "<group>"; };
 		39F40E442305488200542F1A /* ODPTData.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ODPTData.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		39F40E472305488200542F1A /* ODPTData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ODPTData.h; sourceTree = "<group>"; };
 		39F40E482305488200542F1A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		39F40E4D2305488200542F1A /* ODPTDataTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ODPTDataTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		39F40E522305488200542F1A /* ODPTDataTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ODPTDataTests.m; sourceTree = "<group>"; };
 		39F40E542305488200542F1A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		39F40E5F2305491700542F1A /* ODPTDataProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODPTDataProvider.h; sourceTree = "<group>"; };
+		39F40E602305491700542F1A /* ODPTDataProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODPTDataProvider.m; sourceTree = "<group>"; };
+		39F40E612305491700542F1A /* ODPTDataProviderSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODPTDataProviderSession.m; sourceTree = "<group>"; };
+		39F40E632305491700542F1A /* ODPTDataProviderSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODPTDataProviderSession.h; sourceTree = "<group>"; };
+		39F40E6A2305494800542F1A /* ODPTDataLoaderConnectingLines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODPTDataLoaderConnectingLines.h; sourceTree = "<group>"; };
+		39F40E6B2305494800542F1A /* ODPTDataController+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ODPTDataController+Common.m"; sourceTree = "<group>"; };
+		39F40E6C2305494800542F1A /* ODPTDataLoaderOperator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODPTDataLoaderOperator.h; sourceTree = "<group>"; };
+		39F40E6D2305494800542F1A /* ODPTDataController+Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ODPTDataController+Common.h"; sourceTree = "<group>"; };
+		39F40E6E2305494800542F1A /* ODPTDataLoaderStation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODPTDataLoaderStation.h; sourceTree = "<group>"; };
+		39F40E6F2305494800542F1A /* ODPTDataLoaderLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODPTDataLoaderLine.h; sourceTree = "<group>"; };
+		39F40E702305494800542F1A /* ODPTDataAdditional.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODPTDataAdditional.h; sourceTree = "<group>"; };
+		39F40E712305494800542F1A /* ODPTDataLoaderCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODPTDataLoaderCalendar.h; sourceTree = "<group>"; };
+		39F40E722305494800542F1A /* ODPTDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODPTDataController.m; sourceTree = "<group>"; };
+		39F40E732305494800542F1A /* ODPTDataLoaderStation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODPTDataLoaderStation.m; sourceTree = "<group>"; };
+		39F40E742305494800542F1A /* ODPTDataAdditional.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODPTDataAdditional.m; sourceTree = "<group>"; };
+		39F40E752305494800542F1A /* ODPTDataLoaderPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODPTDataLoaderPoint.m; sourceTree = "<group>"; };
+		39F40E762305494800542F1A /* ODPTDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODPTDataController.h; sourceTree = "<group>"; };
+		39F40E772305494800542F1A /* ODPTDataLoaderTimetableStation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODPTDataLoaderTimetableStation.m; sourceTree = "<group>"; };
+		39F40E782305494800542F1A /* ODPTDataLoaderArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODPTDataLoaderArray.h; sourceTree = "<group>"; };
+		39F40E792305494800542F1A /* ODPTDataLoaderTrainLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODPTDataLoaderTrainLocation.m; sourceTree = "<group>"; };
+		39F40E7A2305494900542F1A /* ODPTDataLoaderLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODPTDataLoaderLine.m; sourceTree = "<group>"; };
+		39F40E7B2305494900542F1A /* ODPTDataLoaderOperator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODPTDataLoaderOperator.m; sourceTree = "<group>"; };
+		39F40E7C2305494900542F1A /* ODPTDataLoaderPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODPTDataLoaderPoint.h; sourceTree = "<group>"; };
+		39F40E7D2305494900542F1A /* ODPTDataLoaderLineInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODPTDataLoaderLineInformation.h; sourceTree = "<group>"; };
+		39F40E7E2305494900542F1A /* ODPTDataLoaderTimetableLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODPTDataLoaderTimetableLine.m; sourceTree = "<group>"; };
+		39F40E7F2305494900542F1A /* ODPTDataLoaderArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODPTDataLoaderArray.m; sourceTree = "<group>"; };
+		39F40E802305494900542F1A /* ODPTDataLoaderLineInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODPTDataLoaderLineInformation.m; sourceTree = "<group>"; };
+		39F40E812305494900542F1A /* ODPTDataLoaderConnectingLines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODPTDataLoaderConnectingLines.m; sourceTree = "<group>"; };
+		39F40E822305494900542F1A /* ODPTDataLoaderTimetableLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODPTDataLoaderTimetableLine.h; sourceTree = "<group>"; };
+		39F40E832305494900542F1A /* ODPTDataLoaderTrainType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODPTDataLoaderTrainType.m; sourceTree = "<group>"; };
+		39F40E842305494A00542F1A /* ODPTDataLoaderTrainLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODPTDataLoaderTrainLocation.h; sourceTree = "<group>"; };
+		39F40E852305494A00542F1A /* ODPTDataLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODPTDataLoader.h; sourceTree = "<group>"; };
+		39F40E862305494A00542F1A /* ODPTDataLoaderTimetableStation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODPTDataLoaderTimetableStation.h; sourceTree = "<group>"; };
+		39F40E872305494A00542F1A /* ODPTDataLoaderTrainType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODPTDataLoaderTrainType.h; sourceTree = "<group>"; };
+		39F40E882305494A00542F1A /* ODPTDataLoaderCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODPTDataLoaderCalendar.m; sourceTree = "<group>"; };
+		39F40E892305494B00542F1A /* ODPTDataLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODPTDataLoader.m; sourceTree = "<group>"; };
+		39F40EAB2305499D00542F1A /* holidays.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = holidays.json; sourceTree = "<group>"; };
+		39F40EAC2305499D00542F1A /* line_information_status_en.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = line_information_status_en.json; sourceTree = "<group>"; };
+		39F40EAD2305499D00542F1A /* operator_header_en.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = operator_header_en.json; sourceTree = "<group>"; };
+		39F40EAE2305499D00542F1A /* direct_connecting_line.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = direct_connecting_line.json; sourceTree = "<group>"; };
+		39F40EAF2305499D00542F1A /* inaccessible_railway.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = inaccessible_railway.json; sourceTree = "<group>"; };
+		39F40EB02305499D00542F1A /* other_stationDict.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = other_stationDict.json; sourceTree = "<group>"; };
+		39F40EB12305499D00542F1A /* line_information_level.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = line_information_level.json; sourceTree = "<group>"; };
+		39F40EB22305499D00542F1A /* line_title.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = line_title.json; sourceTree = "<group>"; };
+		39F40EB32305499D00542F1A /* operator_header_ja.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = operator_header_ja.json; sourceTree = "<group>"; };
+		39F40EB42305499D00542F1A /* connect_station.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = connect_station.json; sourceTree = "<group>"; };
+		39F40EB52305499E00542F1A /* station_order_for_line.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = station_order_for_line.json; sourceTree = "<group>"; };
+		39F40EB82305499E00542F1A /* line_color.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = line_color.json; sourceTree = "<group>"; };
+		39F40EB92305499E00542F1A /* line_direction.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = line_direction.json; sourceTree = "<group>"; };
+		39F40ECA230549DD00542F1A /* CoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataManager.m; sourceTree = "<group>"; };
+		39F40ECB230549DD00542F1A /* UserDataModel_1_2.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = UserDataModel_1_2.xcmappingmodel; sourceTree = "<group>"; };
+		39F40ECD230549DD00542F1A /* UserDataModel_v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UserDataModel_v2.xcdatamodel; sourceTree = "<group>"; };
+		39F40ECE230549DD00542F1A /* UserDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UserDataModel.xcdatamodel; sourceTree = "<group>"; };
+		39F40ECF230549DD00542F1A /* UserDataModel_v4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UserDataModel_v4.xcdatamodel; sourceTree = "<group>"; };
+		39F40ED0230549DD00542F1A /* UserDataModel_v3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UserDataModel_v3.xcdatamodel; sourceTree = "<group>"; };
+		39F40ED1230549DD00542F1A /* MigrationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MigrationManager.h; sourceTree = "<group>"; };
+		39F40ED2230549DD00542F1A /* EfficientLoaderQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EfficientLoaderQueue.m; sourceTree = "<group>"; };
+		39F40ED5230549DD00542F1A /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		39F40ED6230549DD00542F1A /* EfficientLoaderQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EfficientLoaderQueue.h; sourceTree = "<group>"; };
+		39F40ED7230549DD00542F1A /* EfficientLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EfficientLoader.h; sourceTree = "<group>"; };
+		39F40ED8230549DD00542F1A /* UserDataModel_3_4.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = UserDataModel_3_4.xcmappingmodel; sourceTree = "<group>"; };
+		39F40ED9230549DD00542F1A /* UserDataModel_2_3.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = UserDataModel_2_3.xcmappingmodel; sourceTree = "<group>"; };
+		39F40EDA230549DD00542F1A /* MigrationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MigrationManager.m; sourceTree = "<group>"; };
+		39F40EDB230549DD00542F1A /* EfficientLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EfficientLoader.m; sourceTree = "<group>"; };
+		39F40EDC230549DD00542F1A /* CoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataManager.h; sourceTree = "<group>"; };
+		39F40EEE2305502500542F1A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		39F40EF02305507A00542F1A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		39F40EF723057B9D00542F1A /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		39F40EF923057D1A00542F1A /* ODPTDataController+Timetable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ODPTDataController+Timetable.h"; sourceTree = "<group>"; };
+		39F40EFA23057D1A00542F1A /* ODPTDataController+Timetable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "ODPTDataController+Timetable.m"; sourceTree = "<group>"; };
+		39F40EFD23057FA100542F1A /* ODPTDataController+Place.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ODPTDataController+Place.h"; sourceTree = "<group>"; };
+		39F40EFE23057FA100542F1A /* ODPTDataController+Place.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "ODPTDataController+Place.m"; sourceTree = "<group>"; };
+		39F40F012305803D00542F1A /* ODPTDataController+Migration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ODPTDataController+Migration.h"; sourceTree = "<group>"; };
+		39F40F022305803D00542F1A /* ODPTDataController+Migration.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "ODPTDataController+Migration.m"; sourceTree = "<group>"; };
+		39F40F05230580D600542F1A /* ODPTDataController+Setting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ODPTDataController+Setting.h"; sourceTree = "<group>"; };
+		39F40F06230580D600542F1A /* ODPTDataController+Setting.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "ODPTDataController+Setting.m"; sourceTree = "<group>"; };
+		39F40F092305820600542F1A /* ODPTDataController+LineAndStation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ODPTDataController+LineAndStation.h"; sourceTree = "<group>"; };
+		39F40F0A2305820600542F1A /* ODPTDataController+LineAndStation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "ODPTDataController+LineAndStation.m"; sourceTree = "<group>"; };
+		39F40F0D230583EC00542F1A /* ODPTDataController+Dynamic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ODPTDataController+Dynamic.h"; sourceTree = "<group>"; };
+		39F40F0E230583EC00542F1A /* ODPTDataController+Dynamic.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "ODPTDataController+Dynamic.m"; sourceTree = "<group>"; };
+		39F40F112305854400542F1A /* ODPTDataConstant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ODPTDataConstant.h; sourceTree = "<group>"; };
+		39F40F122305888700542F1A /* ODPTDataTestsFetch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ODPTDataTestsFetch.h; sourceTree = "<group>"; };
+		39F40F132305888700542F1A /* ODPTDataTestsFetch.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ODPTDataTestsFetch.m; sourceTree = "<group>"; };
+		39F40F1523065AEA00542F1A /* ODPTDataTests+Controller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ODPTDataTests+Controller.h"; sourceTree = "<group>"; };
+		39F40F1623065AEA00542F1A /* ODPTDataTests+Controller.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "ODPTDataTests+Controller.m"; sourceTree = "<group>"; };
+		39F40F1823065B5900542F1A /* ODPTDataTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ODPTDataTests.h; sourceTree = "<group>"; };
+		39F40F1923065C2800542F1A /* ODPTDataTests+Loader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ODPTDataTests+Loader.h"; sourceTree = "<group>"; };
+		39F40F1A23065C2800542F1A /* ODPTDataTests+Loader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "ODPTDataTests+Loader.m"; sourceTree = "<group>"; };
+		39F40F282306AEE700542F1A /* ODPTDataTests+Provider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ODPTDataTests+Provider.h"; sourceTree = "<group>"; };
+		39F40F292306AEE700542F1A /* ODPTDataTests+Provider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "ODPTDataTests+Provider.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +229,7 @@
 				39F40E462305488200542F1A /* ODPTData */,
 				39F40E512305488200542F1A /* ODPTDataTests */,
 				39F40E452305488200542F1A /* Products */,
+				39F40EF623057B9D00542F1A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -71,7 +245,14 @@
 		39F40E462305488200542F1A /* ODPTData */ = {
 			isa = PBXGroup;
 			children = (
+				39F40EF42305780600542F1A /* Resource */,
+				39F40E5E230548B200542F1A /* Provider */,
+				39F40EF12305775400542F1A /* Controller */,
+				39F40EC9230549BB00542F1A /* Base */,
+				39F40EAA2305496A00542F1A /* Additional */,
+				39F40E692305492300542F1A /* Loaders */,
 				39F40E472305488200542F1A /* ODPTData.h */,
+				39F40EEF2305502500542F1A /* Localizable.strings */,
 				39F40E482305488200542F1A /* Info.plist */,
 			);
 			path = ODPTData;
@@ -80,10 +261,146 @@
 		39F40E512305488200542F1A /* ODPTDataTests */ = {
 			isa = PBXGroup;
 			children = (
+				39F40F1823065B5900542F1A /* ODPTDataTests.h */,
 				39F40E522305488200542F1A /* ODPTDataTests.m */,
+				39F40F282306AEE700542F1A /* ODPTDataTests+Provider.h */,
+				39F40F292306AEE700542F1A /* ODPTDataTests+Provider.m */,
+				39F40F1923065C2800542F1A /* ODPTDataTests+Loader.h */,
+				39F40F1A23065C2800542F1A /* ODPTDataTests+Loader.m */,
+				39F40F1523065AEA00542F1A /* ODPTDataTests+Controller.h */,
+				39F40F1623065AEA00542F1A /* ODPTDataTests+Controller.m */,
+				39F40F122305888700542F1A /* ODPTDataTestsFetch.h */,
+				39F40F132305888700542F1A /* ODPTDataTestsFetch.m */,
 				39F40E542305488200542F1A /* Info.plist */,
+				3964C4C423100E690023DE58 /* TestRightAnswerContainer.h */,
+				3964C4C523100E690023DE58 /* TestRightAnswerContainer.m */,
 			);
 			path = ODPTDataTests;
+			sourceTree = "<group>";
+		};
+		39F40E5E230548B200542F1A /* Provider */ = {
+			isa = PBXGroup;
+			children = (
+				39F40E632305491700542F1A /* ODPTDataProviderSession.h */,
+				39F40E612305491700542F1A /* ODPTDataProviderSession.m */,
+				39F40E5F2305491700542F1A /* ODPTDataProvider.h */,
+				39F40E602305491700542F1A /* ODPTDataProvider.m */,
+			);
+			path = Provider;
+			sourceTree = "<group>";
+		};
+		39F40E692305492300542F1A /* Loaders */ = {
+			isa = PBXGroup;
+			children = (
+				39F40E852305494A00542F1A /* ODPTDataLoader.h */,
+				39F40E892305494B00542F1A /* ODPTDataLoader.m */,
+				39F40E782305494800542F1A /* ODPTDataLoaderArray.h */,
+				39F40E7F2305494900542F1A /* ODPTDataLoaderArray.m */,
+				39F40E712305494800542F1A /* ODPTDataLoaderCalendar.h */,
+				39F40E882305494A00542F1A /* ODPTDataLoaderCalendar.m */,
+				39F40E6A2305494800542F1A /* ODPTDataLoaderConnectingLines.h */,
+				39F40E812305494900542F1A /* ODPTDataLoaderConnectingLines.m */,
+				39F40E6F2305494800542F1A /* ODPTDataLoaderLine.h */,
+				39F40E7A2305494900542F1A /* ODPTDataLoaderLine.m */,
+				39F40E7D2305494900542F1A /* ODPTDataLoaderLineInformation.h */,
+				39F40E802305494900542F1A /* ODPTDataLoaderLineInformation.m */,
+				39F40E6C2305494800542F1A /* ODPTDataLoaderOperator.h */,
+				39F40E7B2305494900542F1A /* ODPTDataLoaderOperator.m */,
+				39F40E7C2305494900542F1A /* ODPTDataLoaderPoint.h */,
+				39F40E752305494800542F1A /* ODPTDataLoaderPoint.m */,
+				39F40E6E2305494800542F1A /* ODPTDataLoaderStation.h */,
+				39F40E732305494800542F1A /* ODPTDataLoaderStation.m */,
+				39F40E822305494900542F1A /* ODPTDataLoaderTimetableLine.h */,
+				39F40E7E2305494900542F1A /* ODPTDataLoaderTimetableLine.m */,
+				39F40E862305494A00542F1A /* ODPTDataLoaderTimetableStation.h */,
+				39F40E772305494800542F1A /* ODPTDataLoaderTimetableStation.m */,
+				39F40E842305494A00542F1A /* ODPTDataLoaderTrainLocation.h */,
+				39F40E792305494800542F1A /* ODPTDataLoaderTrainLocation.m */,
+				39F40E872305494A00542F1A /* ODPTDataLoaderTrainType.h */,
+				39F40E832305494900542F1A /* ODPTDataLoaderTrainType.m */,
+			);
+			path = Loaders;
+			sourceTree = "<group>";
+		};
+		39F40EAA2305496A00542F1A /* Additional */ = {
+			isa = PBXGroup;
+			children = (
+				39F40E702305494800542F1A /* ODPTDataAdditional.h */,
+				39F40E742305494800542F1A /* ODPTDataAdditional.m */,
+			);
+			path = Additional;
+			sourceTree = "<group>";
+		};
+		39F40EC9230549BB00542F1A /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				39F40EDC230549DD00542F1A /* CoreDataManager.h */,
+				39F40ECA230549DD00542F1A /* CoreDataManager.m */,
+				39F40ED7230549DD00542F1A /* EfficientLoader.h */,
+				39F40EDB230549DD00542F1A /* EfficientLoader.m */,
+				39F40ED6230549DD00542F1A /* EfficientLoaderQueue.h */,
+				39F40ED2230549DD00542F1A /* EfficientLoaderQueue.m */,
+				39F40ED1230549DD00542F1A /* MigrationManager.h */,
+				39F40EDA230549DD00542F1A /* MigrationManager.m */,
+				39F40ED4230549DD00542F1A /* APIModel.xcdatamodeld */,
+				39F40ECB230549DD00542F1A /* UserDataModel_1_2.xcmappingmodel */,
+				39F40ED9230549DD00542F1A /* UserDataModel_2_3.xcmappingmodel */,
+				39F40ED8230549DD00542F1A /* UserDataModel_3_4.xcmappingmodel */,
+				39F40ECC230549DD00542F1A /* UserDataModel.xcdatamodeld */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		39F40EF12305775400542F1A /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				39F40E762305494800542F1A /* ODPTDataController.h */,
+				39F40E722305494800542F1A /* ODPTDataController.m */,
+				39F40F092305820600542F1A /* ODPTDataController+LineAndStation.h */,
+				39F40F0A2305820600542F1A /* ODPTDataController+LineAndStation.m */,
+				39F40E6D2305494800542F1A /* ODPTDataController+Common.h */,
+				39F40E6B2305494800542F1A /* ODPTDataController+Common.m */,
+				39F40EF923057D1A00542F1A /* ODPTDataController+Timetable.h */,
+				39F40EFA23057D1A00542F1A /* ODPTDataController+Timetable.m */,
+				39F40EFD23057FA100542F1A /* ODPTDataController+Place.h */,
+				39F40EFE23057FA100542F1A /* ODPTDataController+Place.m */,
+				39F40F012305803D00542F1A /* ODPTDataController+Migration.h */,
+				39F40F022305803D00542F1A /* ODPTDataController+Migration.m */,
+				39F40F05230580D600542F1A /* ODPTDataController+Setting.h */,
+				39F40F06230580D600542F1A /* ODPTDataController+Setting.m */,
+				39F40F0D230583EC00542F1A /* ODPTDataController+Dynamic.h */,
+				39F40F0E230583EC00542F1A /* ODPTDataController+Dynamic.m */,
+				39F40F112305854400542F1A /* ODPTDataConstant.h */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		39F40EF42305780600542F1A /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				39F40EAB2305499D00542F1A /* holidays.json */,
+				39F40EAF2305499D00542F1A /* inaccessible_railway.json */,
+				39F40EB42305499D00542F1A /* connect_station.json */,
+				39F40EAE2305499D00542F1A /* direct_connecting_line.json */,
+				39F40EB82305499E00542F1A /* line_color.json */,
+				39F40EB92305499E00542F1A /* line_direction.json */,
+				39F40EB12305499D00542F1A /* line_information_level.json */,
+				39F40EAC2305499D00542F1A /* line_information_status_en.json */,
+				39F40EB22305499D00542F1A /* line_title.json */,
+				39F40EAD2305499D00542F1A /* operator_header_en.json */,
+				39F40EB32305499D00542F1A /* operator_header_ja.json */,
+				39F40EB02305499D00542F1A /* other_stationDict.json */,
+				39F40EB52305499E00542F1A /* station_order_for_line.json */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		39F40EF623057B9D00542F1A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				39F40EF723057B9D00542F1A /* CoreData.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -94,6 +411,35 @@
 			buildActionMask = 2147483647;
 			files = (
 				39F40E552305488200542F1A /* ODPTData.h in Headers */,
+				39F40F0B2305820600542F1A /* ODPTDataController+LineAndStation.h in Headers */,
+				39F40EFB23057D1A00542F1A /* ODPTDataController+Timetable.h in Headers */,
+				39F40F07230580D600542F1A /* ODPTDataController+Setting.h in Headers */,
+				39F40F032305803D00542F1A /* ODPTDataController+Migration.h in Headers */,
+				39F40EFF23057FA100542F1A /* ODPTDataController+Place.h in Headers */,
+				39F40F0F230583EC00542F1A /* ODPTDataController+Dynamic.h in Headers */,
+				391460F62306DC96003D9FCA /* ODPTDataConstant.h in Headers */,
+				39F40E962305494B00542F1A /* ODPTDataController.h in Headers */,
+				39F40E642305491700542F1A /* ODPTDataProvider.h in Headers */,
+				39F40EA62305494B00542F1A /* ODPTDataLoaderTimetableStation.h in Headers */,
+				39F40E9C2305494B00542F1A /* ODPTDataLoaderPoint.h in Headers */,
+				39F40EA42305494B00542F1A /* ODPTDataLoaderTrainLocation.h in Headers */,
+				39F40EE5230549DE00542F1A /* EfficientLoader.h in Headers */,
+				39F40E8D2305494B00542F1A /* ODPTDataController+Common.h in Headers */,
+				39F40EE0230549DE00542F1A /* MigrationManager.h in Headers */,
+				39F40EA52305494B00542F1A /* ODPTDataLoader.h in Headers */,
+				39F40E902305494B00542F1A /* ODPTDataAdditional.h in Headers */,
+				39F40E8A2305494B00542F1A /* ODPTDataLoaderConnectingLines.h in Headers */,
+				39F40E8C2305494B00542F1A /* ODPTDataLoaderOperator.h in Headers */,
+				39F40EEA230549DE00542F1A /* CoreDataManager.h in Headers */,
+				39F40E912305494B00542F1A /* ODPTDataLoaderCalendar.h in Headers */,
+				39F40EA72305494B00542F1A /* ODPTDataLoaderTrainType.h in Headers */,
+				39F40E682305491700542F1A /* ODPTDataProviderSession.h in Headers */,
+				39F40EA22305494B00542F1A /* ODPTDataLoaderTimetableLine.h in Headers */,
+				39F40E8E2305494B00542F1A /* ODPTDataLoaderStation.h in Headers */,
+				39F40EE4230549DE00542F1A /* EfficientLoaderQueue.h in Headers */,
+				39F40E8F2305494B00542F1A /* ODPTDataLoaderLine.h in Headers */,
+				39F40E982305494B00542F1A /* ODPTDataLoaderArray.h in Headers */,
+				39F40E9D2305494B00542F1A /* ODPTDataLoaderLineInformation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,6 +468,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 39F40E5B2305488200542F1A /* Build configuration list for PBXNativeTarget "ODPTDataTests" */;
 			buildPhases = (
+				39F40F24230697C700542F1A /* ShellScript */,
 				39F40E492305488200542F1A /* Sources */,
 				39F40E4A2305488200542F1A /* Frameworks */,
 				39F40E4B2305488200542F1A /* Resources */,
@@ -159,6 +506,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				ja,
 			);
 			mainGroup = 39F40E3A2305488200542F1A;
 			productRefGroup = 39F40E452305488200542F1A /* Products */;
@@ -176,6 +524,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39F40EC42305499E00542F1A /* station_order_for_line.json in Resources */,
+				39F40EC12305499E00542F1A /* line_title.json in Resources */,
+				39F40EBD2305499E00542F1A /* direct_connecting_line.json in Resources */,
+				39F40EBC2305499E00542F1A /* operator_header_en.json in Resources */,
+				39F40EC22305499E00542F1A /* operator_header_ja.json in Resources */,
+				39F40EC02305499E00542F1A /* line_information_level.json in Resources */,
+				39F40EBA2305499E00542F1A /* holidays.json in Resources */,
+				39F40EC72305499E00542F1A /* line_color.json in Resources */,
+				39F40EBE2305499E00542F1A /* inaccessible_railway.json in Resources */,
+				39F40EC32305499E00542F1A /* connect_station.json in Resources */,
+				39F40EC82305499E00542F1A /* line_direction.json in Resources */,
+				39F40EBB2305499E00542F1A /* line_information_status_en.json in Resources */,
+				39F40EED2305502500542F1A /* Localizable.strings in Resources */,
+				39F40EBF2305499E00542F1A /* other_stationDict.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -188,11 +550,64 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		39F40F24230697C700542F1A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\nODPT_TOKEN_FILE=/Users/take/Project/ODPTData/token.txt\nODPT_ENDPOINT_FILE=/Users/take/Project/ODPTData/endpoint.txt\nTARGET_DIR=$BUILT_PRODUCTS_DIR/$PRODUCT_NAME.xctest\n\ncp $ODPT_TOKEN_FILE $TARGET_DIR/\necho \"copy ODPT_TOKEN_FILE -> $TARGET_DIR\"\n\ncp $ODPT_ENDPOINT_FILE $TARGET_DIR/\necho \"copy ODPT_ENDPOINT_FILE -> $TARGET_DIR\"\n\nANSWER_DIR=/Users/take/Project/ODPTData/answer\nrm $TARGET_DIR/test*.json\ncp $ANSWER_DIR/test*.json $TARGET_DIR/\necho \"copy ANSWER_FILE -> $TARGET_DIR\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		39F40E402305488200542F1A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39F40EDD230549DE00542F1A /* CoreDataManager.m in Sources */,
+				39F40EA02305494B00542F1A /* ODPTDataLoaderLineInformation.m in Sources */,
+				39F40EA92305494B00542F1A /* ODPTDataLoader.m in Sources */,
+				39F40E972305494B00542F1A /* ODPTDataLoaderTimetableStation.m in Sources */,
+				39F40EE3230549DE00542F1A /* APIModel.xcdatamodeld in Sources */,
+				39F40E932305494B00542F1A /* ODPTDataLoaderStation.m in Sources */,
+				39F40EE9230549DE00542F1A /* EfficientLoader.m in Sources */,
+				39F40EA12305494B00542F1A /* ODPTDataLoaderConnectingLines.m in Sources */,
+				39F40E9F2305494B00542F1A /* ODPTDataLoaderArray.m in Sources */,
+				39F40E922305494B00542F1A /* ODPTDataController.m in Sources */,
+				39F40E662305491700542F1A /* ODPTDataProviderSession.m in Sources */,
+				39F40E942305494B00542F1A /* ODPTDataAdditional.m in Sources */,
+				39F40F0023057FA100542F1A /* ODPTDataController+Place.m in Sources */,
+				39F40EFC23057D1A00542F1A /* ODPTDataController+Timetable.m in Sources */,
+				39F40E952305494B00542F1A /* ODPTDataLoaderPoint.m in Sources */,
+				39F40E652305491700542F1A /* ODPTDataProvider.m in Sources */,
+				39F40EDF230549DE00542F1A /* UserDataModel.xcdatamodeld in Sources */,
+				39F40F10230583EC00542F1A /* ODPTDataController+Dynamic.m in Sources */,
+				39F40E9E2305494B00542F1A /* ODPTDataLoaderTimetableLine.m in Sources */,
+				39F40EA82305494B00542F1A /* ODPTDataLoaderCalendar.m in Sources */,
+				39F40F0C2305820600542F1A /* ODPTDataController+LineAndStation.m in Sources */,
+				39F40EE8230549DE00542F1A /* MigrationManager.m in Sources */,
+				39F40EDE230549DE00542F1A /* UserDataModel_1_2.xcmappingmodel in Sources */,
+				39F40E9A2305494B00542F1A /* ODPTDataLoaderLine.m in Sources */,
+				39F40EE6230549DE00542F1A /* UserDataModel_3_4.xcmappingmodel in Sources */,
+				39F40F042305803D00542F1A /* ODPTDataController+Migration.m in Sources */,
+				39F40EA32305494B00542F1A /* ODPTDataLoaderTrainType.m in Sources */,
+				39F40EE1230549DE00542F1A /* EfficientLoaderQueue.m in Sources */,
+				39F40E8B2305494B00542F1A /* ODPTDataController+Common.m in Sources */,
+				39F40E9B2305494B00542F1A /* ODPTDataLoaderOperator.m in Sources */,
+				39F40EE7230549DE00542F1A /* UserDataModel_2_3.xcmappingmodel in Sources */,
+				39F40E992305494B00542F1A /* ODPTDataLoaderTrainLocation.m in Sources */,
+				39F40F08230580D600542F1A /* ODPTDataController+Setting.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,7 +615,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3964C4C623100E690023DE58 /* TestRightAnswerContainer.m in Sources */,
+				39F40F1723065AEA00542F1A /* ODPTDataTests+Controller.m in Sources */,
 				39F40E532305488200542F1A /* ODPTDataTests.m in Sources */,
+				39F40F142305888700542F1A /* ODPTDataTestsFetch.m in Sources */,
+				39F40F1B23065C2800542F1A /* ODPTDataTests+Loader.m in Sources */,
+				39F40F2A2306AEE700542F1A /* ODPTDataTests+Provider.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,11 +634,24 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		39F40EEF2305502500542F1A /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				39F40EEE2305502500542F1A /* en */,
+				39F40EF02305507A00542F1A /* ja */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		39F40E562305488200542F1A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -267,7 +700,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -281,6 +714,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -323,7 +757,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -336,15 +770,17 @@
 		39F40E592305488200542F1A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = Q3C9ZEJ5DL;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = ODPTData/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -352,6 +788,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "net.coco-metro.ODPTData";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -360,15 +797,17 @@
 		39F40E5A2305488200542F1A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = Q3C9ZEJ5DL;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = ODPTData/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -376,6 +815,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "net.coco-metro.ODPTData";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -446,6 +886,32 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		39F40ECC230549DD00542F1A /* UserDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				39F40ECD230549DD00542F1A /* UserDataModel_v2.xcdatamodel */,
+				39F40ECE230549DD00542F1A /* UserDataModel.xcdatamodel */,
+				39F40ECF230549DD00542F1A /* UserDataModel_v4.xcdatamodel */,
+				39F40ED0230549DD00542F1A /* UserDataModel_v3.xcdatamodel */,
+			);
+			currentVersion = 39F40ECF230549DD00542F1A /* UserDataModel_v4.xcdatamodel */;
+			path = UserDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		39F40ED4230549DD00542F1A /* APIModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				39F40ED5230549DD00542F1A /* Model.xcdatamodel */,
+			);
+			currentVersion = 39F40ED5230549DD00542F1A /* Model.xcdatamodel */;
+			path = APIModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 39F40E3B2305488200542F1A /* Project object */;
 }

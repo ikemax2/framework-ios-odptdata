@@ -1,0 +1,12 @@
+/*
+   Localizable.strings (Japanese)
+ 
+   Copyright (c) 2019 Takehito Ikema
+ 
+   This software is released under the MIT License.
+   https://opensource.org/licenses/mit-license.php
+ */
+
+"toei_subway" = "都営地下鉄";
+"toei_bus" = "都営バス";
+"multiple_diagram" = "複数の時刻表からの合成";
