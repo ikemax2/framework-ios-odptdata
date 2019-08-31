@@ -106,6 +106,7 @@
 /* Begin PBXFileReference section */
 		3964C4C423100E690023DE58 /* TestRightAnswerContainer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestRightAnswerContainer.h; sourceTree = "<group>"; };
 		3964C4C523100E690023DE58 /* TestRightAnswerContainer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestRightAnswerContainer.m; sourceTree = "<group>"; };
+		39BDEA75231A7906006EBB6A /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		39F40E442305488200542F1A /* ODPTData.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ODPTData.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		39F40E472305488200542F1A /* ODPTData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ODPTData.h; sourceTree = "<group>"; };
 		39F40E482305488200542F1A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -226,6 +227,7 @@
 		39F40E3A2305488200542F1A = {
 			isa = PBXGroup;
 			children = (
+				39BDEA75231A7906006EBB6A /* LICENSE.md */,
 				39F40E462305488200542F1A /* ODPTData */,
 				39F40E512305488200542F1A /* ODPTDataTests */,
 				39F40E452305488200542F1A /* Products */,
