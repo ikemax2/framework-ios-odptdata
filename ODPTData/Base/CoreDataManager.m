@@ -47,6 +47,8 @@
     self = [super init];
     if (self) {
         
+        NSAssert([storeDir hasPrefix:@"file:"] == NO, @"CoreDataManager initializer storeDir must not URL(begin with \"file://\") only Path(begin with \"/\") . ");
+        
         self->storeDirectory = storeDir;
         self->modelIdentifier = modelIdent;
         currentMigrationStep = 0;

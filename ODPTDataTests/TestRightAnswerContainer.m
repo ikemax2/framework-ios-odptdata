@@ -154,12 +154,18 @@ static NSNumber *TestRightAnswerMode = nil;
     NSString *fname = [NSString stringWithFormat:@"%@.json", self->caseName];
     NSString *path = [bundle pathForResource:fname ofType:nil];
     
+    
     return path;
 }
 
 - (NSString *)jsonFileWritingPath{
     
     NSString *userDataDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    
+    if (! [[NSFileManager defaultManager] fileExistsAtPath:userDataDirectory]){
+        [[NSFileManager defaultManager] createDirectoryAtPath:userDataDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+        NSLog(@"make directory %@", userDataDirectory);
+    }
     
     NSString *fname = [NSString stringWithFormat:@"%@.json", self->caseName];
     NSString *path = [userDataDirectory stringByAppendingPathComponent:fname];
@@ -207,7 +213,7 @@ static NSNumber *TestRightAnswerMode = nil;
     dict[@"answers"] = self->answers;
     
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict
-                                                       options:NSJSONWritingSortedKeys
+                                                       options:NSJSONWritingPrettyPrinted
                                                          error:&err];
     
     if(err){
@@ -222,7 +228,7 @@ static NSNumber *TestRightAnswerMode = nil;
     [jsonString writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:&err];
     
     if(err){
-        NSLog(@"JSONFile write error!! case:%@", self->caseName);
+        NSLog(@"JSONFile write error!! case:%@ path:%@", self->caseName, path);
         return;
     }
     

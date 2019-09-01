@@ -203,6 +203,7 @@
 		39F40F1A23065C2800542F1A /* ODPTDataTests+Loader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "ODPTDataTests+Loader.m"; sourceTree = "<group>"; };
 		39F40F282306AEE700542F1A /* ODPTDataTests+Provider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ODPTDataTests+Provider.h"; sourceTree = "<group>"; };
 		39F40F292306AEE700542F1A /* ODPTDataTests+Provider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "ODPTDataTests+Provider.m"; sourceTree = "<group>"; };
+		39FF5CFB231A79AA004EB67E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,6 +228,7 @@
 		39F40E3A2305488200542F1A = {
 			isa = PBXGroup;
 			children = (
+				39FF5CFB231A79AA004EB67E /* README.md */,
 				39BDEA75231A7906006EBB6A /* LICENSE.md */,
 				39F40E462305488200542F1A /* ODPTData */,
 				39F40E512305488200542F1A /* ODPTDataTests */,
