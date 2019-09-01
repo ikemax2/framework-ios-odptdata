@@ -1,5 +1,5 @@
 #  framework-ios-odptdata
-====
+____
 
 iOS Framework for accessing ODPT(Open Data for Public Transportation) API written in Objective-C.
 
@@ -83,8 +83,9 @@ Select "Build Settings" - "Swift Compilar - General", input below at item "Objec
 
 Open this bridging header file, add below line.
 
-> @import ODPTData;
-
+```Objective-C
+@import ODPTData;
+```
 
 ### call function of Framework
 
@@ -95,24 +96,39 @@ In your source code that use function of framework, you should include ODPTData.
 
 To use framework, you instantiate ODPTDataController class first.
 
-> var dataSource = ODPTDataController ( apiCacheDirectory:"zzzz...",  userDataDirectory:"yyyy", endPointURL:"https://xxxxxx", token:"xxxxx" )
+```Swift
+var dataSource = ODPTDataController ( apiCacheDirectory:"zzzz...",  userDataDirectory:"yyyy", endPointURL:"https://xxxxxx", token:"xxxxx" )
+```
 
-> ODPTDataController *dataSource = [[ODPTDataController alloc] initWithAPICacheDirectory:[self cacheDirectory]
->withUserDataDirectory:[self userDataDirectory]
->withEndPointURL:endPointURL
->withToken:token];
-
+```Objective-C
+ODPTDataController *dataSource = [[ODPTDataController alloc] initWithAPICacheDirectory:[self cacheDirectory]
+    withUserDataDirectory:[self userDataDirectory]
+    withEndPointURL:endPointURL
+    withToken:token];
+````
 call prepare  message  of this instance.
 
-> dataSource.prepare()
+```Swift
+dataSource.prepare()
+```
 
-> [dataSource prepare];
+```Objective-C
+[dataSource prepare];
+```
 
 call various utility method of instance of ODPTDataController class.
 
-> dataSource!.request(withOwner: self, stationTitleForIdentifier: ident) { (title: String?) in
->     print(ident + " -> " + title!);
->  }
+```Swift
+dataSource!.request(withOwner: self, stationTitleForIdentifier: ident) { (title: String?) in
+     print(ident + " -> " + title!)
+}
+```
+
+```Objective-C
+[dataSource requestWithOwner:nil StationTitleForIdentifier:StationIdentifier Block:^(NSString *title) {
+    NSLog(@"%@ -> %@", ident, title);
+}];
+```
 
 Almost method need to be called with closure, because ansynchronous behavior.
 
