@@ -28,7 +28,7 @@ This framework has been developed for iOS app directly accessing to ODPT API, ha
 By above feature, even if mass access in a short period at launch App, or discrete access corresponding to App user operation,
 this framework access ODPT API effciently without failure.
 
-This framework is used to TokyoLines iOS Free App version 2.0.4 or later. 
+This framework is used to TokyoLines iOS Free App version 2.0.4 or later.
 
 This framework developer is **unrelated** to administrator of ODPT API.
 To Use this framework effectively, you should agree and comply the API Use Permission Rules set by each API administrator.
@@ -42,7 +42,7 @@ No need for thirdparty library.
 This framework has been developed and built with Xcode 10.2 .
 
 To access to API, you should get EndPointURL and token for your app.
-For API for The Open Data Challenge for Public Transportation in Tokyo, check URL below. 
+For API for The Open Data Challenge for Public Transportation in Tokyo, check URL below.
 <https://tokyochallenge.odpt.org>
 
 
@@ -54,12 +54,12 @@ When using Xcode, you should click the "Clone an existing project" at "Welcome t
 Recommended extracting the files to one level down with making some directory.
 
 
-## Usage 
+## Usage
 
 ### add Framework to your App Project
 
 Close Xcode once, Open the App Project you developing.
-Drag and Drop the ODPTData.xcodeproj file of this framework to **under the your app project** at source list 
+Drag and Drop the ODPTData.xcodeproj file of this framework to **under the your app project** at source list
 **NOT** to same level with your app project.
 
 Select Project file at source list and select build target.
@@ -73,7 +73,7 @@ This framework will be build prior to build your App, and link automatically.
 If Your App Project is written in Swift, you must make bridge header file to call function of this framework,
 because this framework is written in Objective-C.
 
-Add new header file(*.h) to your app project normally.
+Add new header file(\*.h) to your app project normally.
 File name is desirable that "[XXXXX]-Bridging-Header.h" , [XXXXX] is replaced to your app product name.
 
 Select Project file at source list and select build target.
@@ -89,12 +89,12 @@ Open this bridging header file, add below line.
 
 ### call function of Framework
 
-By above sequence, ODPTData.h and other header files will be visible at your *.m or *.swift source file,
+By above sequence, ODPTData.h and other header files will be visible at your \*.m or \*.swift source file,
 Code Snippet in Xcode become in function.
 
-In your source code that use function of framework, you should include ODPTData.h .
-
 To use framework, you instantiate ODPTDataController class first.
+You must set directory of Database file for Cache, EndPointURL and token to Initializer method.
+Fetch the EndPointURL and token from Administrator of API.
 
 ```Swift
 var dataSource = ODPTDataController ( apiCacheDirectory:"zzzz...",  userDataDirectory:"yyyy", endPointURL:"https://xxxxxx", token:"xxxxx" )
@@ -105,15 +105,16 @@ ODPTDataController *dataSource = [[ODPTDataController alloc] initWithAPICacheDir
     withUserDataDirectory:[self userDataDirectory]
     withEndPointURL:endPointURL
     withToken:token];
-````
-call prepare  message  of this instance.
+```
+
+call prepare method of this instance.
 
 ```Swift
-dataSource.prepare()
+ dataSource.prepare()
 ```
 
 ```Objective-C
-[dataSource prepare];
+ [dataSource prepare];
 ```
 
 call various utility method of instance of ODPTDataController class.
@@ -124,8 +125,8 @@ dataSource!.request(withOwner: self, stationTitleForIdentifier: ident) { (title:
 }
 ```
 
-```Objective-C
-[dataSource requestWithOwner:nil StationTitleForIdentifier:StationIdentifier Block:^(NSString *title) {
+```Objective-c
+[dataSource requestWithOwner:nil StationTitleForIdentifier:StationIdentifier Block:^(NSString \*title) {
     NSLog(@"%@ -> %@", ident, title);
 }];
 ```
@@ -135,7 +136,7 @@ Almost method need to be called with closure, because ansynchronous behavior.
 
 ## Usage - Test Code
 
-Some test code is prepared for framework and included in this software.
+Some test code for framework is prepared and included in this repository.
 It is better to run test code first if you would like to modify this framework.
 
 ### make token.txt / endpoint.txt
@@ -144,7 +145,7 @@ make token.txt  with token get from API administrator.
 This file contains only string for token.
 
 make endpoint.txt with EndPointURL get from API administrator.
-This file contains only string for EndPoint URL that begin with "https://" and end with "/v4" in case of  API for The 3rd Open Data Challenge for Public Transportation in Tokyo. 
+This file contains only string for EndPoint URL that begin with "https://" and end with "/v4" in case of  API for The 3rd Open Data Challenge for Public Transportation in Tokyo.
 
 put these files to somewhere which is not managed by git  not to expose the token and EndPointURL.
 
@@ -153,16 +154,16 @@ put these files to somewhere which is not managed by git  not to expose the toke
 
 Close Xcode once, Open this Framework project "ODPTData.xcodeproj" only in Xcode.
 In Build target setting of Xcode,  select the "ODPTDataTests".
-select the "Build Phases" in top of window, open "Run Script". 
-This block represents a shell script that should be executed before building the test code.
+Select the "Build Phases" in top of window, open "Run Script".
+Run Script represents a shell script that should be executed before building the test code.
 
-modify variable "ODPT_TOKEN_FILE" and "ODPT_ENDPOINT_FILE" to the path that you put "token.txt" and "endpoint.txt".
+Set variable "ODPT_TOKEN_FILE" and "ODPT_ENDPOINT_FILE" to the path that you put "token.txt" and "endpoint.txt".
 
 ### run test
 
-Source files for Test placed at under "ODPTDataTests" .
+Source files for Test placed at under "ODPTDataTests" directory.
 For example, select "ODPTDataTests+Controller.m", search "- (void) testRequestLineTitle" .
-Diamond mark will be found at left side of message name, and click.
+Diamond mark will be found at left side of method name, and click.
 Run only this test that fetch some Railway title from API.
 Test Result will be show at console bottom of window.
 
@@ -179,5 +180,4 @@ Even if your work wins a prize in the contest, the developer of this software do
 
 ## Author
 
-Takehito Ikema 
-
+Takehito Ikema
