@@ -320,7 +320,9 @@ NSInteger const kEfficientLoaderMaxConcurrentOperationCount = 1000;
     }else{
         // アクセスに失敗またはキャンセルされた時
         // まだ残っている先頭のLoaderを再実行させ、他のLoaderはそのLoaderのrelatedLoaderにさせる
+
         if([relatedLoadersCopy count] > 0){
+            NSLog(@"loader is failed, first relatedLoader will start load.");
             EfficientLoader *leadLoader = [relatedLoadersCopy firstObject];
             [leadLoader setWaitingRelatedLoader:NO];
             
@@ -334,8 +336,7 @@ NSInteger const kEfficientLoaderMaxConcurrentOperationCount = 1000;
                 }
             }
             
-            //[self addLoader:leadLoader];
-            [self addLoaderInner:loader];
+            [self addLoaderInner:leadLoader];
         }
     }
 

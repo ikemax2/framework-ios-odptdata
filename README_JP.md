@@ -131,7 +131,7 @@ dataSource!.request(withOwner: self, stationTitleForIdentifier: ident) { (title:
 
 API管理者から取得したトークンを記した token.txt を作成します。このファイルはトークンを表す文字列だけを含みます。
 
-API管理者から取得したエンドポイントURL を記した endpoint.txt を作成します。第3回東京公共交通オープンデータチャレンジ用APIの場合、このファイルは、"https://"ではじまり、"/v4"で終わる、エンドポイントURLを表す文字列のみを含みます。
+API管理者から取得したエンドポイントURL を記した endpoint.txt を作成します。エンドポイントURLは、第3回東京公共交通オープンデータチャレンジ用APIの場合、"https://"ではじまり、"/v4"で終わる文字列になります。このファイルは、エンドポイントURLを表す文字列のみを含みます。
 
 ### ODPTDataTests ビルドターゲット向け Run Script の修正
 

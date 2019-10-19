@@ -101,6 +101,43 @@
     
     __block NSManagedObjectID *moID = nil;
     
+    NSManagedObjectContext *moc = [self.dataManager managedObjectContextForConcurrent];
+    
+    [moc performBlockAndWait:^{
+        
+        // CoreData DBから書き換えるべき object を受け取る。
+        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"TimetableStationSet"];
+        [request setPredicate:[NSPredicate predicateWithFormat:@"ofLine == %@ and atStation == %@", LineIdentifier, StationIdentifier]];
+        
+        NSError *error = nil;
+        NSArray *results = [moc executeFetchRequest:request error:&error];
+        
+        if (results == nil) {
+            NSLog(@"Error fetching objects: %@\n%@", [error localizedDescription], [error userInfo]);
+            abort();
+            return;
+        }
+        
+        NSManagedObject *timeTableStationSetObject = nil;
+        if([results count] == 0){
+            // オブジェクトが存在しないので、新たに作る。
+            timeTableStationSetObject = [NSEntityDescription insertNewObjectForEntityForName:@"TimetableStationSet" inManagedObjectContext:moc];
+            [timeTableStationSetObject setValue:LineIdentifier forKey:@"ofLine"];
+            [timeTableStationSetObject setValue:StationIdentifier forKey:@"atStation"];
+            
+            // Save the context.
+            if (![moc save:&error]) {
+                NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+                abort();
+            }
+        }else{
+            timeTableStationSetObject = [results objectAtIndex:0];
+        }
+        
+        moID = [timeTableStationSetObject objectID];
+    }];
+    
+    
     NSMutableSet *calendarIdentsSet = [[NSMutableSet alloc] init]; // 重複防止
     
     for(int k=0; k<[ary count]; k++){
@@ -116,37 +153,8 @@
     }
     
     NSArray *calendarIdents = [calendarIdentsSet allObjects];
-    // NSAssert([calendarIdents count] > 0, @"ODPTDataLoaderTimetableStation timetableStation record is zero. l: %@ s:%@", LineIdentifier, StationIdentifier);
     
     if([calendarIdents count] == 0){
-        
-        NSManagedObjectContext *moc = [self.dataManager managedObjectContextForConcurrent];
-        
-        [moc performBlockAndWait:^{
-            
-            // CoreData DBから書き換えるべき object を受け取る。
-            NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"TimetableStationSet"];
-            [request setPredicate:[NSPredicate predicateWithFormat:@"ofLine == %@ and atStation == %@", LineIdentifier, StationIdentifier]];
-            
-            NSError *error = nil;
-            NSArray *results = [moc executeFetchRequest:request error:&error];
-            
-            if (results == nil) {
-                NSLog(@"Error fetching objects: %@\n%@", [error localizedDescription], [error userInfo]);
-                abort();
-                return;
-            }
-            
-            if([results count] == 0){
-                NSLog(@"can't find station Object %@", StationIdentifier);
-                abort();
-            }
-            
-            NSManagedObject *timeTableStationSetObject = [results objectAtIndex:0];
-            
-            moID = [timeTableStationSetObject objectID];
-        }];
-        
         block(moID);
         return;
     }
@@ -402,47 +410,21 @@
         
         if([results count] == 0){
             //  該当する Station の レコードがない。 -> APIへアクセス。
-            // レコードがぞんざいしないので、新たに作る
-            
+            // ここでは、オブジェクトは作らない。 StationIdentifier が変更となる可能性があるため。
+            /*
             NSManagedObject *obj = [NSEntityDescription insertNewObjectForEntityForName:@"TimetableStationSet" inManagedObjectContext:moc];
             [obj setValue:LineIdentifier forKey:@"ofLine"];
             [obj setValue:StationIdentifier forKey:@"atStation"];
             
-            /*
-             // レコードが存在しないので、新たに作る。平日/土曜日/休日　の3つ。
-            NSNumber *dayTypeWeekday = [NSNumber numberWithInteger:kDayTypeWeekday];
-            NSNumber *dayTypeHoliday = [NSNumber numberWithInteger:kDayTypeHoliday];
-            NSNumber *dayTypeSaturday = [NSNumber numberWithInteger:kDayTypeSaturday];
-            
-            NSArray *dayTypeDB = @[dayTypeWeekday, dayTypeHoliday, dayTypeSaturday];
-            for(int i=0; i<[dayTypeDB count]; i++){
-                NSManagedObject *obj = [NSEntityDescription insertNewObjectForEntityForName:@"TimetableStation" inManagedObjectContext:moc];
-                [obj setValue:LineIdentifier forKey:@"ofLine"];
-                [obj setValue:StationIdentifier forKey:@"atStation"];
-                [obj setValue:dayTypeDB[i] forKey:@"dayType"];
-            }
-            */
             
             // Save the context.
             if (![moc save:&error]) {
                 NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
                 abort();
             }
-            
-            //[self.dataManager saveContext]; // 永続保管 非同期で。
+            */
             
         }else{
-            /*
-            for(int i=0; i<[results count]; i++){
-                NSManagedObject *obj = [results objectAtIndex:i];
-
-                NSNumber *numberDayType = [obj valueForKey:@"dayType"];
-                if([numberDayType integerValue] == dayType){
-                    moID = [obj objectID];
-                    break;
-                }
-            }
-            */
 
             NSManagedObject *obj = [results objectAtIndex:0];
             if([self isCompleteObject:obj] == YES){
@@ -462,8 +444,6 @@
                     abort();
                 }
                 
-                //[self.dataManager saveContext]; // 永続保管 非同期で。
-                
             }
         }
     }];
@@ -474,19 +454,11 @@
         return;
     }
     
-    NSString *LineIdentifierAccess = LineIdentifier;
-    NSString *StationIdentifierAccess = StationIdentifier;
-    
-    // 千代田線支線用の対応
-    /*
-    if([LineIdentifierAccess containsString:@"ChiyodaBranch"] ){
-        LineIdentifierAccess = [LineIdentifier stringByReplacingOccurrencesOfString:@"ChiyodaBranch" withString:@"Chiyoda"];
-        StationIdentifierAccess = [StationIdentifier stringByReplacingOccurrencesOfString:@"ChiyodaBranch" withString:@"Chiyoda"];
-    }
-    */
+    //NSString *LineIdentifierAccess = LineIdentifier;
+    //NSString *StationIdentifierAccess = StationIdentifier;
     
     // APIへアクセス可能な路線か確認
-    if(! [self isAbleToAccessAPIOfLine:LineIdentifierAccess]){
+    if(! [self isAbleToAccessAPIOfLine:LineIdentifier]){
         
         NSDictionary *rec = [NSDictionary dictionaryWithObjectsAndKeys:
                              StationIdentifier, @"owl:sameAs",
@@ -503,37 +475,28 @@
         return;
     }
     
+
+    
     // APIアクセス開始。
     
     __block ODPTDataLoaderLine *job;
     job = [[ODPTDataLoaderLine alloc] initWithLine:LineIdentifier Block:^(NSManagedObjectID *moID) {
+
         
         if(moID == nil){
             // APIアクセスに失敗。
             NSLog(@"ODPTDataLoaderLine return nil. ident:%@", LineIdentifier);
-            // メインスレッドで実行。
-            /*
-            dispatch_async(
-                           dispatch_get_main_queue(),
-                           ^{
-                               block(nil);
-                           }
-                           );
-             */
+
             block(nil);
             return;
         }
         
         NSManagedObjectContext *moc = [self.dataManager managedObjectContextForConcurrent];
         
-        // __block NSString *endStationIdentifier;
         __block NSArray *directions;
         
         [moc performBlockAndWait:^{
-            NSManagedObject *obj = [moc objectWithID:moID];
-            
-            //NSManagedObject *endStationObj = [job endStationForLineObject:obj];
-            //endStationIdentifier = [endStationObj valueForKey:@"identifier"];
+            NSManagedObject *obj = [moc objectWithID:moID];  // Line エンティティ　オブジェクト
             
             directions  = [job directionIdentifierForLineObject:obj];
         }];
@@ -542,10 +505,24 @@
         NSMutableArray *preds = [[NSMutableArray alloc] init];
         
         // railDirectionは複数帰ってくる場合がある。
-        // NSMutableArray *directions = [[job directionIdentifierForEndStation:endStationIdentifier withLine:LineIdentifier] mutableCopy];
         NSInteger type = [self stationTypeForStationIdentifier:StationIdentifier];
 
+        __block NSString *StationIdentifierAccess = nil;
         if(type == ODPTDataStationTypeTrainStop){
+            
+            [moc performBlockAndWait:^{
+                NSManagedObject *obj = [moc objectWithID:moID];  // Line エンティティ　オブジェクト
+                
+                // stationIdentifier と lineIdentifier の一致を確認
+                StationIdentifierAccess = [self connectStationOfLine:obj forStationIdentifier:StationIdentifier];
+                
+                NSAssert(StationIdentifierAccess != nil, @"ODPTDataLoaderTimetableStation station %@ and line %@ is not match.", self.stationIdentifier, self.lineIdentifier);
+                
+                if([StationIdentifierAccess isEqualToString:StationIdentifier] == NO){
+                    NSLog(@"WARNING!! stationIdentifier is replaced. %@ -> %@", StationIdentifier, StationIdentifierAccess);
+                }
+                
+            }];
             
             for(int i=0; i<[directions count]; i++){
                 NSDictionary *pred = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -557,7 +534,7 @@
             }
             
         }else if(type == ODPTDataStationTypeBusStop){
-            
+            StationIdentifierAccess = StationIdentifier;
             for(int i=0; i<[directions count]; i++){
                 NSDictionary *pred = [NSDictionary dictionaryWithObjectsAndKeys:
                                       @"odpt:BusstopPoleTimetable", @"type",
@@ -591,7 +568,7 @@
                 }
             }
             
-            [self makeObjectOfLineIdentifier:LineIdentifier andStationIdentifier:StationIdentifier ForDictionaries:nextArray Block:^(NSManagedObjectID *moID) {
+            [self makeObjectOfLineIdentifier:LineIdentifier andStationIdentifier:StationIdentifierAccess ForDictionaries:nextArray Block:^(NSManagedObjectID *moID) {
                 
                 block(moID);
                 return;
@@ -604,7 +581,6 @@
     job.dataProvider = self.dataProvider;
     job.dataManager = self.dataManager;
     
-    //[[LoaderManager sharedManager] addLoader:job];
     [[self queue] addLoader:job];
     
 }

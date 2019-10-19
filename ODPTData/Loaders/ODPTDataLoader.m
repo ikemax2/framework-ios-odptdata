@@ -119,6 +119,27 @@
     
 }
 
+- (NSInteger)lineTypeForTimetableIdentifier:(NSString *)TimetableIdentifier{
+    
+    NSInteger type = ODPTDataLineTypeUndefined;
+    //鉄道かバスか
+    NSArray *f = [TimetableIdentifier componentsSeparatedByString:@":"];
+    NSAssert([f count] == 2, @"lineTypeForTimetableIdentifier identifier is invalid. %@", TimetableIdentifier);
+    
+    if( [ [f objectAtIndex:0] containsString:@"Train"] == YES ){
+        // 鉄道
+        type = ODPTDataLineTypeRailway;
+    }else if( [ [f objectAtIndex:0] containsString:@"Bus"] == YES ){
+        // バス
+        type = ODPTDataLineTypeBus;
+    }else{
+        // そのほか
+        NSLog(@"Line Class invalid Identifier!! ident:%@", TimetableIdentifier);
+    }
+    
+    return type;
+}
+
 - (NSString *)operatorIdentifierForLineIdentifier:(NSString *)LineIdentifier{
     
     NSArray *f = [LineIdentifier componentsSeparatedByString:@":"];
@@ -389,7 +410,8 @@
 
 // 路線の停車駅に、特定の駅が含まれるか、確認する。
 - (NSString *) connectStationOfLine:(NSManagedObject *)lineObject forStation:(NSManagedObject *)stationObject{
-    NSAssert([stationObject.entity.name isEqualToString:@"Station"], @"isContainStation entity type is invalid.");
+    NSAssert([lineObject.entity.name isEqualToString:@"Line"], @"isContainStation entity type is invalid. type Line is desired.");
+    NSAssert([stationObject.entity.name isEqualToString:@"Station"], @"isContainStation entity type is invalid. type Station is desired.");
     NSString *stationIdent  = [stationObject valueForKey:@"identifier"];
     
     return [self connectStationOfLine:lineObject forStationIdentifier:stationIdent];
@@ -397,7 +419,7 @@
     
 - (NSString *) connectStationOfLine:(NSManagedObject *)lineObject forStationIdentifier:(NSString *)stationIdent{
 
-    NSAssert([lineObject.entity.name isEqualToString:@"Line"], @"isContainStation entity type is invalid.");
+    NSAssert([lineObject.entity.name isEqualToString:@"Line"], @"isContainStation entity type is invalid. type Line is desired.");
     
     NSOrderedSet *set = [lineObject valueForKey:@"stations"];
     NSArray *ary = [set array];
@@ -405,11 +427,11 @@
     for(int i=0; i<[ary count]; i++){
         NSManagedObject *s = [ary objectAtIndex:i];
         if( [[ODPTDataAdditional sharedData] isConnectStation:[s valueForKey:@"identifier"] andStation:stationIdent] ){
-            NSLog(@"connectStationOfLine : %@ <- %@", [s valueForKey:@"identifier"], stationIdent);
+            //NSLog(@"connectStationOfLine : %@ <- %@", [s valueForKey:@"identifier"], stationIdent);
             return [s valueForKey:@"identifier"];
         }
     }
-    NSLog(@"connectStationOfLine : nil <- %@", stationIdent);
+    // NSLog(@"connectStationOfLine : nil <- %@", stationIdent);
     return nil;
 }
 
@@ -461,7 +483,53 @@
     return [dict copy];
 }
 
+-(NSDictionary *)dictionaryForTrainTimetables:(NSArray<NSManagedObject *> *)vehicleObjects{
+    
+    NSMutableArray *recordArray = [[NSMutableArray alloc] init];
+    // NSMutableArray *lineArray = [[NSMutableArray alloc] init];
+    NSMutableArray *trainNumberArray = [[NSMutableArray alloc] init];
+    
+    NSMutableDictionary *vehicleDict = [[NSMutableDictionary alloc] init];
+    
+    for(int i=0; i<[vehicleObjects count]; i++){
+        NSManagedObject *vehicleObject = vehicleObjects[i];
+        NSAssert([vehicleObject.entity.name isEqualToString:@"TimetableVehicle"], @"dictionaryForVehicleTimetables: entity type is invalid.");
+    
+        
+        NSOrderedSet *records = [vehicleObject valueForKey:@"records"];
+        
+        for(int i=0; i<[records count]; i++){
+            NSManagedObject *recordObject = [records objectAtIndex:i];
+            
+            NSArray *keys = [[[recordObject entity] attributesByName] allKeys];
+            NSDictionary *dict = [recordObject dictionaryWithValuesForKeys:keys];
+            
+            [recordArray addObject:dict];
+        }
+    /*
+        NSManagedObject *ttLineObject = [vehicleObject valueForKey:@"array"];
+        id ofLine = [ttLineObject valueForKey:@"ofLine"];
+        NSAssert(ofLine != nil, @"dictionaryForVehicleTimetables: ofLine field is empty.");
+        [lineArray addObject:ofLine];
+    */
+        id trainNumber = [vehicleObject valueForKey:@"trainNumber"];
+        // NSAssert(trainNumber != nil, @"dictionaryForVehicleTimetables: trainNumber field is empty.");
+        if(trainNumber == nil){
+            trainNumber = @"???";
+        }
+        [trainNumberArray addObject:trainNumber];
+    }
+    
+    // [vehicleDict setObject:lineArray forKey:@"ofLine"];
+    [vehicleDict setObject:trainNumberArray forKey:@"trainNumber"];
+    [vehicleDict setObject:recordArray forKey:@"records"];
+    
+    return [vehicleDict copy];
+    
+    
+}
 
+// 未使用
 -(NSDictionary *)dictionaryForTrainTimetable:(NSManagedObject *)vehicleObject{
     NSAssert([vehicleObject.entity.name isEqualToString:@"TimetableVehicle"], @"dictionaryForVehicleTimetable: entity type is invalid.");
     
@@ -858,7 +926,7 @@
 
 - (NSArray <NSString *> *)directionIdentifierForLineObject:(NSManagedObject *)lineObject{
 
-    NSString *lineIdentifier = [lineObject valueForKey:@"identifier"];
+    // NSString *lineIdentifier = [lineObject valueForKey:@"identifier"];
     NSString *directionIdent = [lineObject valueForKey:@"direction"];
     
     

@@ -28,6 +28,7 @@ enum {
 - (NSInteger)identifierTypeForIdentifier:(NSString *)identifier;
 - (NSInteger)stationTypeForStationIdentifier:(NSString *)StationIdentifier;
 - (NSInteger)lineTypeForLineIdentifier:(NSString *)LineIdentifier;
+- (NSInteger)lineTypeForTimetableIdentifier:(NSString *)TimetableIdentifier;
 - (NSString *)operatorIdentifierForLineIdentifier:(NSString *)LineIdentifier;
 - (double)convertLocationDataString:(id)text;
 - (NSArray <NSString *> *)directionIdentifierForLineObject:(NSManagedObject *)lineObject;
@@ -44,7 +45,9 @@ enum {
 - (NSString *) connectStationOfLine:(NSManagedObject *)lineObject forStationIdentifier:(NSString *)stationIdent;
 - (NSTimeInterval) timeIntervalOfTimetableRecord:(NSManagedObject *)recordObject SinceDate:(NSDate *)date;
 - (NSDictionary *)dictionaryForStationTimetableRecord:(NSManagedObject *)recordObject;
+// 未使用
 - (NSDictionary *)dictionaryForTrainTimetable:(NSManagedObject *)trainObject;
+- (NSDictionary *)dictionaryForTrainTimetables:(NSArray<NSManagedObject *> *)vehicleObjects;
 - (BOOL)isValidDateOfObject:(NSManagedObject *)object;
 - (NSDictionary *)dictionaryForTrainLocation:(NSManagedObject *)trainLocationObject;
 - (NSString *)stationTitleForStationObject:(NSManagedObject *)stationObject;

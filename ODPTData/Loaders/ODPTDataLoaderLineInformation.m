@@ -308,7 +308,7 @@
     [self requestBy:self lineInformationOf:self.lineIdentifier Block:^(NSManagedObjectID *moID){
         
         if(moID == nil || [self isCancelled] == YES){
-            NSLog(@"requestTrainLocation returns nil or cancelled. ident:%@", self.lineIdentifier);
+            NSLog(@"requestLineInformation returns nil or cancelled. ident:%@", self.lineIdentifier);
             [self setFailure];
             [self startCallBack];
             [self completeOperation];

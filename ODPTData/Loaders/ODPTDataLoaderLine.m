@@ -43,7 +43,7 @@
 }
 
 // 内部の再帰呼び出し時のみに適用する
-//  チェクフラグを NOとし、オブジェクトが未完成でもLoaderが完了するようにする。
+//  チェクフラグを NOとし、オブジェクトが未完成でもLoaderが完了するようにする。  循環参照を防止する。
 - (id) initWithLine:(NSString *)lineIdentifier withoutCheck:(BOOL)noCheck Block:(void (^)(NSManagedObjectID *))block{
     
     if(self = [super init]){
@@ -108,8 +108,6 @@
     // オブジェクトの完全性を確認. // performBlock 内から呼び出すこと
     
     // isValidConnectingLines は ODPTDataConnectingLines によりセットされる
-    // TODO: 要見直し. ManagedLoaderの挙動から。
-    //    odpt.Railway:TokyoMetro.Tozai.1.1 / odpt.Railway:JR-East.ChuoSobuLocal.1.2 による循環参照時の挙動も。
     //fetchDateがセットされていなければ不完全と考える
     
     if(objectCompletionCheck == NO){
@@ -575,14 +573,14 @@
                     // 直通路線を設定
                     NSMutableArray *ary = [[NSMutableArray alloc] init];
                     
-                    NSLog(@"ODPTDataLoader setDirectConnecting line:%@", LineIdentifier);
+                    // NSLog(@"ODPTDataLoader setDirectConnecting line:%@", LineIdentifier);
                     for(int i=count; i<[cons count]; i++){
                         id moID = [moIDArray objectAtIndex:i];
                         
                         if([moID isKindOfClass:[NSManagedObjectID class]] == YES){
                             NSManagedObject *conLineObj = [moc objectWithID:moID];
                             [ary addObject:conLineObj];
-                            NSLog(@"   set:%@", [conLineObj valueForKey:@"identifier"]);
+                            //NSLog(@"   set:%@", [conLineObj valueForKey:@"identifier"]);
                         }else{
                             // 多分 NSNull. 取得に失敗
                         }

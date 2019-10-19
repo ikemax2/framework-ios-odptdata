@@ -19,8 +19,12 @@
 #import "ODPTDataLoaderCalendar.h"
 #import "ODPTDataLoaderConnectingLines.h"
 #import "ODPTDataLoaderOperator.h"
+#import "ODPTDataLoaderTimetableLine.h"
+#import "ODPTDataLoaderTimetableVehicle.h"
+#import "ODPTDataLoaderTimetableStation.h"
 #import "EfficientLoader.h"
 #import "TestRightAnswerContainer.h"
+
 
 @implementation ODPTDataTests (Loader)
 
@@ -671,7 +675,6 @@
     // 正解を管理するContainerを作成
     TestRightAnswerContainer *rightAnswer = [[TestRightAnswerContainer alloc] initWithTestCase:caseName];
     
-    
     [self prepareForAPIAccessWithReset:YES];
     
     NSArray *operatorIdents = @[@"odpt.Operator:JR-East",
@@ -723,4 +726,271 @@
     
 }
 
+
+- (void)testODPTDataLoaderTimetableVehicle{
+    NSString *caseName = @"testODPTDataLoaderTimetableVehicle";
+    
+    // 正解を管理するContainerを作成
+    TestRightAnswerContainer *rightAnswer = [[TestRightAnswerContainer alloc] initWithTestCase:caseName];
+    
+    
+    [self prepareForAPIAccessWithReset:YES];
+    
+    NSArray *timetableIdents = @[@"odpt.TrainTimetable:TokyoMetro.Chiyoda.A1001K.SaturdayHoliday"
+                                ];
+    
+    // 非同期処理の完了を監視するオブジェクトを作成
+    XCTestExpectation *expectation = [self expectationWithDescription:caseName];
+    expectation.expectedFulfillmentCount = [timetableIdents count];
+    
+    for(int p=0; p<[timetableIdents count]; p++){
+        NSString *timetableIdentifier = timetableIdents[p];
+        
+        __block ODPTDataLoaderTimetableVehicle *job;
+        job = [[ODPTDataLoaderTimetableVehicle alloc] initWithTimetableVehicle:timetableIdentifier Block:^(NSManagedObjectID *moID) {
+            
+            NSManagedObjectContext *moc = [self->dataManager managedObjectContextForConcurrent];
+            
+            [moc performBlockAndWait:^{
+                NSManagedObject *obj = [moc objectWithID:moID];
+                // ここでは operator entity のオブジェクトが返ってくる。
+                
+                NSLog(@"ident:%@", [obj valueForKey:@"identifier"]);
+                NSLog(@"trainNumber:%@", [obj valueForKey:@"trainNumber"]);
+                
+                NSArray *records = [obj valueForKey:@"records"];
+                for(int i=0; i<[records count]; i++){
+                    NSManagedObject *recObj = records[i];
+                    NSLog(@"time: %@:%@ %@", [recObj valueForKey:@"timeHour"], [recObj valueForKey:@"timeMinute"],
+                          [recObj valueForKey:@"atStation"]);
+                }
+                
+                NSMutableOrderedSet *refSet = [obj valueForKey:@"referenceTimetable"];
+                for(int j=0; j<[[refSet array] count]; j++){
+                    NSManagedObject *robj = [refSet objectAtIndex:j];
+                    
+                    NSLog(@"ident:%@", [robj valueForKey:@"identifier"]);
+                    NSLog(@"trainNumber:%@", [robj valueForKey:@"trainNumber"]);
+                    NSArray *records = [robj valueForKey:@"records"];
+                    for(int i=0; i<[records count]; i++){
+                        NSManagedObject *recObj = records[i];
+                        NSLog(@"time: %@:%@ %@", [recObj valueForKey:@"timeHour"], [recObj valueForKey:@"timeMinute"],
+                              [recObj valueForKey:@"atStation"]);
+                    }
+                }
+                
+                /*
+                // 正解記録 or 正解確認
+                if([rightAnswer judgeAnswer:answer forQuery:q] == NO){
+                    XCTAssertFalse(YES, @"answer is wrong or not Found. Query:%@ ", q);
+                }
+                 */
+            }];
+            
+            [expectation fulfill];
+        }];
+        
+        job.dataProvider = dataProvider;
+        job.dataManager = dataManager;
+        
+        [eQueue addLoader:job];
+    }
+    
+    // 指定秒数待つ
+    [self waitForExpectations:@[expectation] timeout:30.0f enforceOrder:NO];
+    
+}
+
+- (void)testODPTDataLoaderTimetableLine{
+    NSString *caseName = @"testODPTDataLoaderTimetableLine";
+    
+    // 正解を管理するContainerを作成
+    TestRightAnswerContainer *rightAnswer = [[TestRightAnswerContainer alloc] initWithTestCase:caseName];
+    
+    [self prepareForAPIAccessWithReset:YES];
+    
+    NSArray *lineIdents = @[@"odpt.Railway:TokyoMetro.Chiyoda.1.1"];
+    
+    // 非同期処理の完了を監視するオブジェクトを作成
+    XCTestExpectation *expectation = [self expectationWithDescription:caseName];
+    expectation.expectedFulfillmentCount = [lineIdents count];
+    
+    for(int p=0; p<[lineIdents count]; p++){
+        NSString *lineIdentifier = lineIdents[p];
+        
+        __block ODPTDataLoaderTimetableLine *job;
+        job = [[ODPTDataLoaderTimetableLine alloc] initWithLine:lineIdentifier Block:^(NSManagedObjectID *moID) {
+            
+            NSManagedObjectContext *moc = [self->dataManager managedObjectContextForConcurrent];
+            
+            [moc performBlockAndWait:^{
+                NSManagedObject *timetableSetObj = [moc objectWithID:moID]; //  entity: TimetableLineSet
+                
+                NSArray *timetableLines = [[timetableSetObj valueForKey:@"timetableLines"] allObjects];
+                
+                // departureDate に対してマッチする calendarを選ぶ -> hitCalendarIdent
+                NSMutableArray *calendars = [[NSMutableArray alloc] init];
+                for(int j=0; j<[timetableLines count]; j++){
+                    NSManagedObject *timetableObj = timetableLines[j];
+                    NSManagedObject *calendarObject = [timetableObj valueForKey:@"calendar"];
+                    
+                    if(calendarObject != nil){
+                        [calendars addObject:calendarObject];
+                    }else{
+                        NSLog(@"requestTrainTimetableOfLine nil calendar detect. line:%@ ", lineIdentifier);
+                    }
+                }
+                
+                NSDate *departureTime = [NSDate date];
+                NSManagedObject *timetableObj = nil;
+                NSString *hitCalendarIdent = nil;
+                if([calendars count] > 0){
+                    hitCalendarIdent = [job applicableCalendarIdentifierForDate:departureTime fromCalendars:calendars];
+                    
+                    for(int j=0; j<[timetableLines count]; j++){
+                        NSManagedObject *calendarObject = [timetableLines[j] valueForKey:@"calendar"];
+                        NSString *calendarIdent = [calendarObject valueForKey:@"identifier"];
+                        //NSLog(@"xx ci:%@", calendarIdent);
+                        
+                        if([calendarIdent isEqualToString:hitCalendarIdent] == YES){
+                            timetableObj = timetableLines[j];
+                            break;
+                        }
+                    }
+                }
+                
+                NSArray *vehicles = nil;
+                if(timetableObj == nil){
+                    NSLog(@"requestTrainTimetableOfLine detect cannot find timetableObj for now calendar. l:%@ c:%@", lineIdentifier, hitCalendarIdent);
+                    vehicles = @[];
+                }else{
+                    NSOrderedSet *set = [timetableObj valueForKey:@"vehicles"];
+                    vehicles = [set array];
+                }
+                
+                for(int p=0; p<[vehicles count]; p++){
+                    NSManagedObject *vehicle = vehicles[p];  // vehicle は TimeTableVehicle エンティティ
+                    
+                    NSNumber *isValidReference = [vehicle valueForKey:@"isValidReference"];
+                    NSLog(@"isValidReference:%@", isValidReference);
+                    NSOrderedSet *records = [vehicle valueForKey:@"records"];
+                    for(int q=0; q<[records count]; q++){
+                        NSManagedObject *rec = [records objectAtIndex:q];
+                        NSLog(@"%@ (%@:%@)", [rec valueForKey:@"atStation"], [rec valueForKey:@"timeHour"], [rec valueForKey:@"timeMinute"]);
+                    }
+                    break;
+                }
+                /*
+                 // 正解記録 or 正解確認
+                 if([rightAnswer judgeAnswer:answer forQuery:q] == NO){
+                 XCTAssertFalse(YES, @"answer is wrong or not Found. Query:%@ ", q);
+                 }
+                 */
+            }];
+            
+            [expectation fulfill];
+        }];
+        
+        job.dataProvider = dataProvider;
+        job.dataManager = dataManager;
+        
+        [eQueue addLoader:job];
+    }
+    
+    // 指定秒数待つ
+    [self waitForExpectations:@[expectation] timeout:30.0f enforceOrder:NO];
+    
+}
+
+- (void)testODPTDataLoaderTimetableStation{
+    NSString *caseName = @"testODPTDataLoaderTimetableStation";
+    
+    // 正解を管理するContainerを作成
+    TestRightAnswerContainer *rightAnswer = [[TestRightAnswerContainer alloc] initWithTestCase:caseName];
+    
+    [self prepareForAPIAccessWithReset:YES];
+    
+    NSArray *lineIdents = @[@"odpt.Railway:JR-East.Yokosuka.1.1"];
+    NSArray *stationIdents = @[@"odpt.Station:JR-East.SobuRapid.Tokyo"];
+    
+    // 非同期処理の完了を監視するオブジェクトを作成
+    XCTestExpectation *expectation = [self expectationWithDescription:caseName];
+    expectation.expectedFulfillmentCount = [lineIdents count];
+    
+    for(int p=0; p<[lineIdents count]; p++){
+        NSString *lineIdentifier = lineIdents[p];
+        NSString *stationIdentifier = stationIdents[p];
+        
+        __block ODPTDataLoaderTimetableStation *job;
+        job = [[ODPTDataLoaderTimetableStation alloc] initWithLine:lineIdentifier andStation:stationIdentifier Block:^(NSManagedObjectID *moID) {
+            
+            NSManagedObjectContext *moc = [self->dataManager managedObjectContextForConcurrent];
+            
+            [moc performBlockAndWait:^{
+                
+                NSManagedObject *timetableSetObj = [moc objectWithID:moID]; //  entity: TimetableStationSet
+                
+                NSArray *timetableStations = [[timetableSetObj valueForKey:@"timetableStations"] allObjects];
+                // departureDate に対してマッチする calendarを選ぶ -> hitCalendarIdent
+                NSMutableArray *calendars = [[NSMutableArray alloc] init];
+                for(int j=0; j<[timetableStations count]; j++){
+                    NSManagedObject *timetableObj = timetableStations[j];
+                    NSManagedObject *calendarObject = [timetableObj valueForKey:@"calendar"];
+                    
+                    if(calendarObject != nil){
+                        [calendars addObject:calendarObject];
+                    }else{
+                        NSLog(@"requestStationTimetableOfLine nil calendar detect. line:%@ ", lineIdentifier);
+                    }
+                }
+                
+                NSDate *departureTime = [NSDate date];
+                NSManagedObject *timetableObj = nil;
+                NSString *hitCalendarIdent = nil;
+                if([calendars count] > 0){
+                    hitCalendarIdent = [job applicableCalendarIdentifierForDate:departureTime fromCalendars:calendars];
+                    
+                    for(int j=0; j<[timetableStations count]; j++){
+                        NSManagedObject *calendarObject = [timetableStations[j] valueForKey:@"calendar"];
+                        NSString *calendarIdent = [calendarObject valueForKey:@"identifier"];
+                        //NSLog(@"xx ci:%@", calendarIdent);
+                        
+                        if([calendarIdent isEqualToString:hitCalendarIdent] == YES){
+                            timetableObj = timetableStations[j];
+                            break;
+                        }
+                    }
+                }
+                
+                NSArray *records = nil;
+                if(timetableObj == nil){
+                    NSLog(@"requestStationTimetableOfLine detect cannot find timetableObj for now calendar. l:%@ c:%@", lineIdentifier, hitCalendarIdent);
+                    records = @[];
+                }else{
+                    NSOrderedSet *set = [timetableObj valueForKey:@"records"];
+                    records = [set array];
+                }
+                
+                for(int p=0; p<3; p++){
+                    NSManagedObject *record = records[p];  // record は TimeTableStationRecord エンティティ
+                    
+                    NSLog(@"%@ (%@:%@)", [record valueForKey:@"destination"], [record valueForKey:@"timeHour"],
+                          [record valueForKey:@"timeMinute"]);
+                }
+                
+            }];
+        
+            [expectation fulfill];
+        }];
+        
+        job.dataProvider = dataProvider;
+        job.dataManager = dataManager;
+        
+        [eQueue addLoader:job];
+    }
+    
+    // 指定秒数待つ
+    [self waitForExpectations:@[expectation] timeout:30.0f enforceOrder:NO];
+
+}
 @end

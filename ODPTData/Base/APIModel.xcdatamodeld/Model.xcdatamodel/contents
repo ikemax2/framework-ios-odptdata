@@ -115,15 +115,17 @@
         <relationship name="timetableStations" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TimetableStation" inverseName="parentSet" inverseEntity="TimetableStation" syncable="YES"/>
     </entity>
     <entity name="TimetableVehicle" representedClassName="NSManagedObject" syncable="YES">
-        <attribute name="dayType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="destinationStations" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="index" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="ofLine" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="startingStation" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="terminalStation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isValidReference" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="originStations" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="trainNumber" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="trainType" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="array" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TimetableLine" inverseName="vehicles" inverseEntity="TimetableLine" syncable="YES"/>
         <relationship name="records" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="TimetableVehicleRecord" inverseName="timetableVehicle" inverseEntity="TimetableVehicleRecord" syncable="YES"/>
+        <relationship name="referenceTimetable" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="TimetableVehicle" inverseName="refererTimetable" inverseEntity="TimetableVehicle" syncable="YES"/>
+        <relationship name="refererTimetable" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TimetableVehicle" inverseName="referenceTimetable" inverseEntity="TimetableVehicle" syncable="YES"/>
     </entity>
     <entity name="TimetableVehicleRecord" representedClassName="NSManagedObject" syncable="YES">
         <attribute name="atStation" optional="YES" attributeType="String" syncable="YES"/>
@@ -169,7 +171,7 @@
         <element name="TimetableStation" positionX="-617.10546875" positionY="88.125" width="128" height="135"/>
         <element name="TimetableStationRecord" positionX="-387.453125" positionY="244.796875" width="128" height="180"/>
         <element name="TimetableStationSet" positionX="-810.92578125" positionY="90.1015625" width="128" height="90"/>
-        <element name="TimetableVehicle" positionX="155.76171875" positionY="131.37890625" width="128" height="180"/>
+        <element name="TimetableVehicle" positionX="155.76171875" positionY="131.37890625" width="128" height="208"/>
         <element name="TimetableVehicleRecord" positionX="328.40234375" positionY="185.26953125" width="128" height="150"/>
         <element name="TrainLocation" positionX="178.78125" positionY="-464.1953125" width="128" height="150"/>
         <element name="TrainLocationArray" positionX="-11.875" positionY="-448.60546875" width="128" height="105"/>

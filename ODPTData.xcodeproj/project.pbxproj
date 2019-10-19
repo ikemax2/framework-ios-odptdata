@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		391460F62306DC96003D9FCA /* ODPTDataConstant.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40F112305854400542F1A /* ODPTDataConstant.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3964C4C623100E690023DE58 /* TestRightAnswerContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3964C4C523100E690023DE58 /* TestRightAnswerContainer.m */; };
+		398A23C22323F78800729CC8 /* README_JP.md in Resources */ = {isa = PBXBuildFile; fileRef = 398A23C12323F78800729CC8 /* README_JP.md */; };
+		39AD033A232C893900A5D87A /* ODPTDataLoaderTimetableVehicle.h in Headers */ = {isa = PBXBuildFile; fileRef = 39AD0338232C893900A5D87A /* ODPTDataLoaderTimetableVehicle.h */; };
+		39AD033B232C893900A5D87A /* ODPTDataLoaderTimetableVehicle.m in Sources */ = {isa = PBXBuildFile; fileRef = 39AD0339232C893900A5D87A /* ODPTDataLoaderTimetableVehicle.m */; };
 		39F40E4E2305488200542F1A /* ODPTData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39F40E442305488200542F1A /* ODPTData.framework */; };
 		39F40E532305488200542F1A /* ODPTDataTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F40E522305488200542F1A /* ODPTDataTests.m */; };
 		39F40E552305488200542F1A /* ODPTData.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F40E472305488200542F1A /* ODPTData.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -106,6 +109,9 @@
 /* Begin PBXFileReference section */
 		3964C4C423100E690023DE58 /* TestRightAnswerContainer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestRightAnswerContainer.h; sourceTree = "<group>"; };
 		3964C4C523100E690023DE58 /* TestRightAnswerContainer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestRightAnswerContainer.m; sourceTree = "<group>"; };
+		398A23C12323F78800729CC8 /* README_JP.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README_JP.md; sourceTree = "<group>"; };
+		39AD0338232C893900A5D87A /* ODPTDataLoaderTimetableVehicle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ODPTDataLoaderTimetableVehicle.h; sourceTree = "<group>"; };
+		39AD0339232C893900A5D87A /* ODPTDataLoaderTimetableVehicle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ODPTDataLoaderTimetableVehicle.m; sourceTree = "<group>"; };
 		39BDEA75231A7906006EBB6A /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		39F40E442305488200542F1A /* ODPTData.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ODPTData.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		39F40E472305488200542F1A /* ODPTData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ODPTData.h; sourceTree = "<group>"; };
@@ -228,6 +234,7 @@
 		39F40E3A2305488200542F1A = {
 			isa = PBXGroup;
 			children = (
+				398A23C12323F78800729CC8 /* README_JP.md */,
 				39FF5CFB231A79AA004EB67E /* README.md */,
 				39BDEA75231A7906006EBB6A /* LICENSE.md */,
 				39F40E462305488200542F1A /* ODPTData */,
@@ -316,6 +323,8 @@
 				39F40E732305494800542F1A /* ODPTDataLoaderStation.m */,
 				39F40E822305494900542F1A /* ODPTDataLoaderTimetableLine.h */,
 				39F40E7E2305494900542F1A /* ODPTDataLoaderTimetableLine.m */,
+				39AD0338232C893900A5D87A /* ODPTDataLoaderTimetableVehicle.h */,
+				39AD0339232C893900A5D87A /* ODPTDataLoaderTimetableVehicle.m */,
 				39F40E862305494A00542F1A /* ODPTDataLoaderTimetableStation.h */,
 				39F40E772305494800542F1A /* ODPTDataLoaderTimetableStation.m */,
 				39F40E842305494A00542F1A /* ODPTDataLoaderTrainLocation.h */,
@@ -383,16 +392,16 @@
 			isa = PBXGroup;
 			children = (
 				39F40EAB2305499D00542F1A /* holidays.json */,
-				39F40EAF2305499D00542F1A /* inaccessible_railway.json */,
 				39F40EB42305499D00542F1A /* connect_station.json */,
 				39F40EAE2305499D00542F1A /* direct_connecting_line.json */,
 				39F40EB82305499E00542F1A /* line_color.json */,
 				39F40EB92305499E00542F1A /* line_direction.json */,
 				39F40EB12305499D00542F1A /* line_information_level.json */,
 				39F40EAC2305499D00542F1A /* line_information_status_en.json */,
-				39F40EB22305499D00542F1A /* line_title.json */,
 				39F40EAD2305499D00542F1A /* operator_header_en.json */,
 				39F40EB32305499D00542F1A /* operator_header_ja.json */,
+				39F40EAF2305499D00542F1A /* inaccessible_railway.json */,
+				39F40EB22305499D00542F1A /* line_title.json */,
 				39F40EB02305499D00542F1A /* other_stationDict.json */,
 				39F40EB52305499E00542F1A /* station_order_for_line.json */,
 			);
@@ -426,6 +435,7 @@
 				39F40E642305491700542F1A /* ODPTDataProvider.h in Headers */,
 				39F40EA62305494B00542F1A /* ODPTDataLoaderTimetableStation.h in Headers */,
 				39F40E9C2305494B00542F1A /* ODPTDataLoaderPoint.h in Headers */,
+				39AD033A232C893900A5D87A /* ODPTDataLoaderTimetableVehicle.h in Headers */,
 				39F40EA42305494B00542F1A /* ODPTDataLoaderTrainLocation.h in Headers */,
 				39F40EE5230549DE00542F1A /* EfficientLoader.h in Headers */,
 				39F40E8D2305494B00542F1A /* ODPTDataController+Common.h in Headers */,
@@ -537,6 +547,7 @@
 				39F40EBA2305499E00542F1A /* holidays.json in Resources */,
 				39F40EC72305499E00542F1A /* line_color.json in Resources */,
 				39F40EBE2305499E00542F1A /* inaccessible_railway.json in Resources */,
+				398A23C22323F78800729CC8 /* README_JP.md in Resources */,
 				39F40EC32305499E00542F1A /* connect_station.json in Resources */,
 				39F40EC82305499E00542F1A /* line_direction.json in Resources */,
 				39F40EBB2305499E00542F1A /* line_information_status_en.json in Resources */,
@@ -587,6 +598,7 @@
 				39F40E932305494B00542F1A /* ODPTDataLoaderStation.m in Sources */,
 				39F40EE9230549DE00542F1A /* EfficientLoader.m in Sources */,
 				39F40EA12305494B00542F1A /* ODPTDataLoaderConnectingLines.m in Sources */,
+				39AD033B232C893900A5D87A /* ODPTDataLoaderTimetableVehicle.m in Sources */,
 				39F40E9F2305494B00542F1A /* ODPTDataLoaderArray.m in Sources */,
 				39F40E922305494B00542F1A /* ODPTDataController.m in Sources */,
 				39F40E662305491700542F1A /* ODPTDataProviderSession.m in Sources */,
@@ -828,8 +840,9 @@
 		39F40E5C2305488200542F1A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Q3C9ZEJ5DL;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ODPTDataTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -838,6 +851,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "net.coco-metro.ODPTDataTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -845,8 +859,9 @@
 		39F40E5D2305488200542F1A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Q3C9ZEJ5DL;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ODPTDataTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -855,6 +870,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "net.coco-metro.ODPTDataTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

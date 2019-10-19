@@ -12,6 +12,7 @@
 #import "ODPTDataAdditional.h"
 #import "ODPTDataLoaderCalendar.h"
 #import "ODPTDataLoaderArray.h"
+#import "ODPTDataLoaderTimetableVehicle.h"
 
 @implementation ODPTDataLoaderTimetableLine{
     
@@ -305,9 +306,6 @@
             
             NSManagedObject *timeTableLineSetObject = [results objectAtIndex:0];
             
-            //NSSet *lineObjs = [[NSSet alloc] init];
-            //[timeTableLineSetObject setValue:lineObjs forKey:@"timetableLines"];
-            
             // Save the context.
             if (![moc save:&error]) {
                 // Replace this implementation with code to handle the error appropriately.
@@ -355,16 +353,8 @@
                 NSManagedObject *obj = [moc objectWithID:moID];
                 [calendarObjForCalendar setObject:obj forKey:calendarIdents[k]];
             }
-            
-            
-            /*
-            NSManagedObject *timetableLineObj = [timeTableObjForCalendar objectForKey:calendarIdent];
-            
-            NSMutableSet *timeTableSet = [[NSMutableSet alloc] init];
-            NSArray *calendars = [timeTableObjForCalendar allKeys];
-            */
         
-            NSInteger type = [self lineTypeForLineIdentifier:self.lineIdentifier];
+            // NSInteger type = [self lineTypeForLineIdentifier:self.lineIdentifier];
         
             // CoreData DBから書き換えるべき object を受け取る。
             NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"TimetableLineSet"];
@@ -392,98 +382,18 @@
             for(int k=0; k<[ary count]; k++){
                 // weekday, holiday などで複数存在するはず。
                 NSDictionary *dict = [ary objectAtIndex:k];
-            
+                NSString *timetableIdentifier = [dict objectForKey:@"owl:sameAs"];
                 
-                // 取得データ入れ替え  Errata対応
-                // modifyDataは　NSDictionary   key: trainNumber  value: APIから取得したJSONデータ
-                // dict = [self modifyTrainTimeTable:dict withData:modifyData];
+                // object entity:TimetableVehicle  を作成・取得。
+                // ODPTDataLoaderTimetableVehicle 内のメソッドを利用。
+                ODPTDataLoaderTimetableVehicle *loader = [[ODPTDataLoaderTimetableVehicle alloc] initWithTimetableVehicle:timetableIdentifier Block:nil];
+                loader.dataManager = self.dataManager;
                 
-                // レコードを新たに作る。
-                NSManagedObject *trainObj = [NSEntityDescription insertNewObjectForEntityForName:@"TimetableVehicle" inManagedObjectContext:moc];
+                NSManagedObjectID *moID = [loader makeObjectOfTimetableIdentifier:timetableIdentifier ForDictionary:dict];
+                
+                NSManagedObject *trainObj = [moc objectWithID:moID];
+                
                 [trainObj setValue:[NSNumber numberWithInteger:index++] forKey:@"index"];
-                
-                [trainObj setValue:LineIdentifier forKey:@"ofLine"];
-                // [trainObj setValue:[NSNumber numberWithInteger:dayType] forKey:@"dayType"];
-                
-                NSArray *recs = nil;
-                if(type == ODPTDataLineTypeRailway){
-                    [trainObj setValue:[dict objectForKey:@"odpt:trainNumber"] forKey:@"trainNumber"];
-                    // [trainObj setValue:[dict objectForKey:@"odpt:startingStation"] forKey:@"startingStation"];
-                    [trainObj setValue:[dict objectForKey:@"odpt:terminalStation"] forKey:@"terminalStation"];
-                    [trainObj setValue:[dict objectForKey:@"odpt:trainType"] forKey:@"trainType"];
-                    
-                    recs = [dict objectForKey:@"odpt:trainTimetableObject"];
-                    
-                }else if (type == ODPTDataLineTypeBus){
-                    
-                    recs = [dict objectForKey:@"odpt:busTimetableObject"];
-                    
-                }
-                
-                NSMutableOrderedSet *set = [[NSMutableOrderedSet alloc] init];
-                for(int i=0; i<[recs count]; i++){
-                    
-                    NSDictionary *recordDict = [recs objectAtIndex:i];
-                    
-                    // たまに arrivalStationだけで arrivalTimeが存在しないレコードがある。無視する。
-                    if([recordDict objectForKey:@"odpt:departureTime"] == nil && [recordDict objectForKey:@"odpt:arrivalTime"] == nil){
-                        continue;
-                    }
-                    
-                    // レコードを新たに作る。
-                    NSManagedObject *record = [NSEntityDescription insertNewObjectForEntityForName:@"TimetableVehicleRecord" inManagedObjectContext:moc];
-                    [record setValue:[NSNumber numberWithInteger:i] forKey:@"index"];
-                    
-                    NSString *timeStr = [recordDict objectForKey:@"odpt:departureTime"];
-                    if(timeStr == nil || [timeStr isKindOfClass:[NSString class]] == NO){
-                        timeStr = [recordDict objectForKey:@"odpt:arrivalTime"];
-                        
-                        if(timeStr == nil || [timeStr isKindOfClass:[NSString class]] == NO){
-                            NSAssert(NO, @"timeTableLine record invalid.");
-                        }
-                        
-                        if(type == ODPTDataLineTypeRailway){
-                            [record setValue:[recordDict objectForKey:@"odpt:arrivalStation"] forKey:@"atStation"];
-                        }else if(type == ODPTDataLineTypeBus){
-                            [record setValue:[recordDict objectForKey:@"odpt:busstopPole"] forKey:@"atStation"];
-                        }
-                        [record setValue:[NSNumber numberWithBool:YES] forKey:@"isArrival"];
-                        
-                        
-                    }else{
-                        if(type == ODPTDataLineTypeRailway){
-                            [record setValue:[recordDict objectForKey:@"odpt:departureStation"] forKey:@"atStation"];
-                        }else if(type == ODPTDataLineTypeBus){
-                            [record setValue:[recordDict objectForKey:@"odpt:busstopPole"] forKey:@"atStation"];
-                        }
-                        [record setValue:[NSNumber numberWithBool:NO] forKey:@"isArrival"];
-                    }
-                    
-                    // NSAssert([timeStr isKindOfClass:[NSString class]] == YES, @"ODPTDataLoaderTimetable timeStr is not NSString!!");
-                    NSArray *f = [timeStr componentsSeparatedByString:@":"];
-                    if(f == nil || [f count] == 0){
-                        NSAssert(NO, @"requestTimetableSubBlock error. timeFormat is invalid.");
-                    }
-                    
-                    NSInteger timeHour = [f[0] integerValue];
-                    NSInteger timeMinute = [f[1] integerValue];
-                    NSInteger timeSecond = 0;
-                    
-                    // 午後12時をすぎる電車の場合は、24を足す。
-                    if(timeHour < 3){
-                        timeHour += 24;
-                    }
-                    [record setValue:[NSNumber numberWithInteger:timeHour] forKey:@"timeHour"];
-                    
-                    [record setValue:[NSNumber numberWithInteger:timeMinute] forKey:@"timeMinute"];
-                    [record setValue:[NSNumber numberWithInteger:timeSecond] forKey:@"timeSecond"];
-                    
-                    // [tmpTable addObject:record];
-                    
-                    [set addObject:record];
-                }
-                
-                [trainObj setValue:[set copy] forKey:@"records"];
                 
                 // timetableLine オブジェクトに trains をセット
                 NSString *calendarIdent = [dict objectForKey:@"odpt:calendar"];
@@ -492,18 +402,19 @@
                 if(timetableLineObj == nil){
                     // 存在しなければ entity: timetableLine のオブジェクトを新たに作る。
                     timetableLineObj = [NSEntityDescription insertNewObjectForEntityForName:@"TimetableLine" inManagedObjectContext:moc];
-                    
+                    [timetableLineObj setValue:LineIdentifier forKey:@"ofLine"];
                     NSManagedObject *calendarObj = [calendarObjForCalendar objectForKey:calendarIdent];
                     if(calendarObj != nil){
                         [timetableLineObj setValue:calendarObj forKey:@"calendar"];
                     }
                     [timeTableObjForCalendar setObject:timetableLineObj forKey:calendarIdent];
                 }
-
+                
                 NSMutableOrderedSet *trainSet = [[timetableLineObj valueForKey:@"vehicles"] mutableCopy];
                 
                 [trainSet addObject:trainObj];
                 [timetableLineObj setValue:[trainSet copy] forKey:@"vehicles"];
+                
                 
             }
 
@@ -523,7 +434,6 @@
                 NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
                 abort();
             }
-            //[self.dataManager saveContext]; // 永続保管
             
             moID = [timeTableLineSetObject objectID];
             
@@ -536,7 +446,6 @@
     job.dataManager = self.dataManager;
     [job setParent:self];
     
-    //[[LoaderManager sharedManager] addLoader:job];
     [[self queue] addLoader:job];
 
 }
@@ -598,8 +507,6 @@
                     NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
                     abort();
                 }
-                
-                //[self.dataManager saveContext]; // 永続保管 非同期で。
                 
             }
 
@@ -734,7 +641,6 @@
     job.dataProvider = self.dataProvider;
     job.dataManager = self.dataManager;
     
-    //[[LoaderManager sharedManager] addLoader:job];
     [[self queue] addLoader:job];
     
 }

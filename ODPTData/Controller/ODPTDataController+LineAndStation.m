@@ -258,7 +258,7 @@
 }
 
 
-- (void)requestWithOwner:(id _Nullable)owner StationLocationsForLineArray:(NSArray<NSString *> *)LineIdentifiers Block:(void (^)(NSArray * _Nullable))block{
+- (void)requestWithOwner:(id _Nullable)owner StationDictsForLineArray:(NSArray<NSString *> *)LineIdentifiers Block:(void (^)(NSArray * _Nullable))block{
     
     
     NSMutableArray *loaders = [[NSMutableArray alloc] init];
@@ -652,13 +652,13 @@
     [self->queue addLoader:job];
 }
 
-- (void)requestWithOwner:(id _Nullable)owner LineTitleForIdentifier:(NSString *)identifierOriginal Block:(void (^)(NSString * _Nullable))block{
+- (void)requestWithOwner:(id _Nullable)owner LineTitleForIdentifier:(NSString *)LineIdentifier Block:(void (^)(NSString * _Nullable))block{
     
-    __block ODPTDataLoaderLine *job = [[ODPTDataLoaderLine alloc] initWithLine:identifierOriginal Block:^(NSManagedObjectID *moID) {
+    __block ODPTDataLoaderLine *job = [[ODPTDataLoaderLine alloc] initWithLine:LineIdentifier Block:^(NSManagedObjectID *moID) {
         
         if(moID == nil){
             // APIアクセスに失敗。
-            NSLog(@"ODPTDataLoaderLine return nil. ident:%@", identifierOriginal);
+            NSLog(@"ODPTDataLoaderLine return nil. ident:%@", LineIdentifier);
             // メインスレッドで実行。
             dispatch_async(
                            dispatch_get_main_queue(),
@@ -692,6 +692,63 @@
     [job setOwner:owner];
     
     [self->queue addLoader:job];
+}
+
+- (void)requestWithOwner:(id)owner LineTitleForIdentifierArray:(NSArray<NSString *> *)identifiers Block:(void (^)(NSArray<NSString *> *))block{
+    
+    NSMutableArray *loaders = [[NSMutableArray alloc] init];
+    for(int i=0; i<[identifiers count]; i++){
+        NSString *lineIdent = identifiers[i];
+        ODPTDataLoaderLine *l = [[ODPTDataLoaderLine alloc] initWithLine:lineIdent Block:nil];
+        
+        l.dataProvider = dataProvider;
+        l.dataManager = APIDataManager;
+        
+        [loaders addObject:l];
+    }
+    
+    __block ODPTDataLoaderArray *job = [[ODPTDataLoaderArray alloc] initWithLoaders:loaders Block:^(NSArray<NSManagedObjectID *> *moIDArray) {
+        
+        if(moIDArray == nil){
+            // APIアクセスに失敗。
+            NSLog(@"ODPTDataLoaderLine return nil. ident:%@", identifiers);
+            // メインスレッドで実行。
+            dispatch_async(
+                           dispatch_get_main_queue(),
+                           ^{
+                               block(nil);
+                           }
+                           );
+            return;
+        }
+
+        NSManagedObjectContext *moc = [self->APIDataManager managedObjectContextForConcurrent];
+
+
+        __block NSMutableArray *retTitles = [[NSMutableArray alloc] init];
+        [moc performBlockAndWait:^{
+            for(int i=0; i<[moIDArray count]; i++){
+                NSManagedObjectID *moID = moIDArray[i];
+                NSManagedObject *obj = [moc objectWithID:moID];
+                NSString *lineTitle = [job lineTitleForLineObject:obj];
+                [retTitles addObject:lineTitle];
+            }
+        }];
+        
+        // メインスレッドで実行。
+        dispatch_async(
+                       dispatch_get_main_queue(),
+                       ^{
+                           block(retTitles);
+                       });
+    }];
+    
+    job.dataProvider = dataProvider;
+    job.dataManager = APIDataManager;
+    [job setOwner:owner];
+    
+    [self->queue addLoader:job];
+    
 }
 
 // API にアクセスして駅名を得るタイプ
@@ -948,8 +1005,21 @@
 
 - (void)requestWithOwner:(id _Nullable)owner IntegratedStationsForLine:(NSString *)LineIdentifier atStation:(NSDictionary *)startStationDict withBranchData:(NSArray * _Nullable)branchData Block:(void (^)(NSArray * _Nullable, NSArray * _Nullable, NSArray * _Nullable))block{
     
-    __block NSString *startStationIdentifier = startStationDict[@"identifier"];
-    __block NSNumber *startStationDuplication = startStationDict[@"duplication"];
+    [self innerRequestWithOwner:owner IntegratedStationsForLine:LineIdentifier atStation:startStationDict withBranchData:branchData Block:^(NSArray *integratedStations, NSArray *integratedLines, NSArray *usedBranchData) {
+        
+        // メインスレッドで実行。
+        dispatch_async(
+                       dispatch_get_main_queue(),
+                       ^{
+                           block(integratedStations, integratedLines, usedBranchData);
+                       }
+                       );
+        
+    }];
+}
+
+- (void)innerRequestWithOwner:(id _Nullable)owner IntegratedStationsForLine:(NSString *)LineIdentifier atStation:(NSDictionary *)startStationDict withBranchData:(NSArray * _Nullable)branchData Block:(void (^)(NSArray * _Nullable, NSArray * _Nullable, NSArray * _Nullable))block{
+    
     
     __block NSMutableArray  *integratedStations = [[NSMutableArray alloc] init];
     __block NSMutableArray  *integratedLines = [[NSMutableArray alloc] init];
@@ -958,6 +1028,8 @@
     
     __block NSString  *bottomLine = @"";
     __block ODPTDataLoaderLine *job;
+    
+    NSAssert(startStationDict != nil,@"integratedStationsForLine startStationDict is nil");
     
     // 再帰呼び出しされるメソッド
     __block void (^recursive)(NSManagedObject *, NSInteger, BOOL) = ^(NSManagedObject *lineObj, NSInteger index, BOOL reverse) {
@@ -1078,13 +1150,9 @@
         if(moID == nil){
             // APIアクセスに失敗。
             NSLog(@"ODPTDataLoaderLine return nil. ident:%@", LineIdentifier);
-            // メインスレッドで実行。
-            dispatch_async(
-                           dispatch_get_main_queue(),
-                           ^{
-                               block(nil, nil, nil);
-                           }
-                           );
+
+            block(nil, nil, nil);
+            
             return;
         }
         
@@ -1094,13 +1162,25 @@
             
             NSManagedObject *obj = [moc objectWithID:moID];
             
+
+            NSString *startStationIdentifier = startStationDict[@"identifier"];
+            NSNumber *startStationDuplication = startStationDict[@"duplication"];
+            
+            if([job lineTypeForLineIdentifier:LineIdentifier] == ODPTDataLineTypeRailway){
+                // startStationIdentifier が LineIdentifier の路線にない場合、 路線上の駅名となるように変換する。
+                startStationIdentifier = [job connectStationOfLine:obj forStationIdentifier:startStationDict[@"identifier"]];
+                
+                if([startStationIdentifier isEqualToString:startStationDict[@"identifier"]] == NO){
+                    NSLog(@"WARNING. integratedStationsForLine station changed. %@ -> %@", startStationDict[@"identifier"], startStationIdentifier);
+                }
+            }
+            
             // 逆方向を探す。
             int startIndex = -1;
             
-            
             NSManagedObject *reverseObj = [obj valueForKey:@"reverseDirectionLine"];
             if(reverseObj != nil){
-                
+
                 NSArray *stations = [job stationArrayForLineObject:reverseObj];
                 NSArray *duplications = [job stationDuplicationArrayForLineObject:reverseObj];
                 for(int i=0; i<[stations count]; i++){
@@ -1115,7 +1195,7 @@
                 }
                 
                 NSAssert(startIndex >= 0, @"requestIntegratedStationIdentifiers(reverse) startIndex invalid. line:%@, station:%@", LineIdentifier, startStationIdentifier);
-                
+
                 recursive(reverseObj, startIndex, YES);
                 
                 [integratedLines addObject:bottomLine];
@@ -1180,14 +1260,7 @@
              }*/
         }];
         
-        // メインスレッドで実行。
-        dispatch_async(
-                       dispatch_get_main_queue(),
-                       ^{
-                           block([integratedStations copy], [integratedLines copy], [usedBranchData copy]);
-                       }
-                       );
-        
+        block([integratedStations copy], [integratedLines copy], [usedBranchData copy]);
         
     }];
     
@@ -1891,8 +1964,101 @@
     [self->queue addLoader:job];
 }
 
+- (void)requestWithOwner:(id _Nullable)owner IntegratedReverseDirectionLineForLine:(NSString *)LineIdentifier atStation:(NSDictionary *)startStationDict withBranchData:(NSArray * _Nullable)branchData Block:(void (^)(NSString * _Nullable, NSDictionary * _Nullable))block{
+
+    [self innerRequestWithOwner:owner IntegratedStationsForLine:LineIdentifier atStation:startStationDict withBranchData:branchData Block:^(NSArray *integratedStations, NSArray *integratedLines, NSArray *usedBranchData) {
+        
+        NSString *backLineIdentifier = nil;
+        for(int i=0; i<[integratedStations count]; i++){
+            if([startStationDict isEqualToDictionary:integratedStations[i]] == YES){
+                backLineIdentifier = integratedLines[i];
+                break;
+            }
+        }
+        
+        NSAssert(backLineIdentifier != nil, @"integratedReverseDirectionLine cannot found station. %@", startStationDict[@"identifier"]);
+        
+        if([backLineIdentifier isEqualToString:@""] == YES){
+           
+            // メインスレッドで実行。
+            dispatch_async(
+                           dispatch_get_main_queue(),
+                           ^{
+                               block(nil, nil);
+                           }
+                           );
+            return;
+        }
+        
+        __block ODPTDataLoaderLine *job;
+        job = [[ODPTDataLoaderLine alloc] initWithLine:backLineIdentifier Block:^(NSManagedObjectID *moID) {
+            
+            if(moID == nil){
+                // APIアクセスに失敗。
+                NSLog(@"ODPTDataLoaderLine return nil. ident:%@", backLineIdentifier);
+                
+                // メインスレッドで実行。
+                dispatch_async(
+                               dispatch_get_main_queue(),
+                               ^{
+                                   block(nil, nil);
+                               });
+                
+                return;
+            }
+            
+            NSManagedObjectContext *moc = [self->APIDataManager managedObjectContextForConcurrent];
+            
+            __block NSString *reverseDirectionLine = nil;
+            __block NSDictionary *reverseStartStation = nil;;
+            
+            [moc performBlockAndWait:^{
+                NSManagedObject *obj = [moc objectWithID:moID];
+                
+                NSManagedObject *reverseObj = [obj valueForKey:@"reverseDirectionLine"];
+                
+                if(reverseObj != nil){
+                    reverseDirectionLine = [reverseObj valueForKey:@"identifier"];
+                
+                    NSString *reverseStartStationIdent = [job connectStationOfLine:reverseObj forStationIdentifier:startStationDict[@"identifier"]];
+                    reverseStartStation = @{@"identifier":reverseStartStationIdent, @"duplication":startStationDict[@"duplication"] };
+                }                    
+                
+            }];
+            
+            // メインスレッドで実行。
+            dispatch_async(
+                           dispatch_get_main_queue(),
+                           ^{
+                               block(reverseDirectionLine, reverseStartStation);
+                           }
+                           );
+            
+        }];
+        
+        job.dataProvider = self->dataProvider;
+        job.dataManager = self->APIDataManager;
+        [job setOwner:owner];
+        
+        [self->queue addLoader:job];
+    }];
+    
+}
 
 - (void)requestWithOwner:(id _Nullable)owner ReverseDirectionLineForLine:(NSString *)LineIdentifier Block:(void (^)(NSString * _Nullable))block{
+    
+    [self innerRequestWithOwner:owner ReverseDirectionLineForLine:LineIdentifier Block:^(NSString *reverseDirectionLine) {
+        
+        // メインスレッドで実行。
+        dispatch_async(
+                       dispatch_get_main_queue(),
+                       ^{
+                           block(reverseDirectionLine);
+                       });
+    }];
+}
+
+- (void)innerRequestWithOwner:(id _Nullable)owner ReverseDirectionLineForLine:(NSString *)LineIdentifier Block:(void (^)(NSString * _Nullable))block{
     
     __block ODPTDataLoaderLine *job;
     job = [[ODPTDataLoaderLine alloc] initWithLine:LineIdentifier Block:^(NSManagedObjectID *moID) {
@@ -1900,13 +2066,9 @@
         if(moID == nil){
             // APIアクセスに失敗。
             NSLog(@"ODPTDataLoaderLine return nil. ident:%@", LineIdentifier);
-            // メインスレッドで実行。
-            dispatch_async(
-                           dispatch_get_main_queue(),
-                           ^{
-                               block(nil);
-                           }
-                           );
+            
+            block(nil);
+
             return;
         }
         
@@ -1924,12 +2086,8 @@
             
         }];
         
-        // メインスレッドで実行。
-        dispatch_async(
-                       dispatch_get_main_queue(),
-                       ^{
-                           block(reverseDirectionLine);
-                       });
+        block(reverseDirectionLine);
+        
     }];
     
     job.dataProvider = dataProvider;
@@ -2040,6 +2198,8 @@
     
     [self->queue addLoader:job];
 }
+
+
 
 - (BOOL)isConnectStation:(NSString *)stationA andStation:(NSString *)stationB{
     return [[ODPTDataAdditional sharedData] isConnectStation:stationA andStation:stationB];

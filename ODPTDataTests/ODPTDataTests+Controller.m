@@ -253,7 +253,8 @@
     [dataSource clearCache];
     [dataSource clearUserData];
     
-    NSArray *LineIdentifiers = @[ @"odpt.Railway:TokyoMetro.Tozai.1.1",
+    NSArray *LineIdentifiers = @[ @"odpt.Railway:JR-East.Yokosuka.1.1",
+                                  @"odpt.Railway:TokyoMetro.Tozai.1.1",
                                   @"odpt.Railway:TokyoMetro.Marunouchi.1.1",
                                   @"odpt.Railway:TokyoMetro.MarunouchiBranch.1.1",
                                   @"odpt.Railway:TokyoMetro.Chiyoda.1.1",
@@ -276,7 +277,8 @@
                                   @"odpt.Railway:Keikyu.Main.1.2"
                                  ];
     
-    NSArray *StationDicts = @[@{@"identifier":@"odpt.Station:TokyoMetro.Tozai.Otemachi", @"duplication":@0},
+    NSArray *StationDicts = @[@{@"identifier":@"odpt.Station:JR-East.SobuRapid.Tokyo", @"duplication":@0},
+                              @{@"identifier":@"odpt.Station:TokyoMetro.Tozai.Otemachi", @"duplication":@0},
                                     @{@"identifier":@"odpt.Station:TokyoMetro.Marunouchi.NakanoSakaue", @"duplication":@0},  // 路線の分岐点
                                     @{@"identifier":@"odpt.Station:TokyoMetro.MarunouchiBranch.NakanoFujimicho", @"duplication":@0},
                                     @{@"identifier":@"odpt.Station:TokyoMetro.Chiyoda.Akasaka", @"duplication":@0},
@@ -325,7 +327,8 @@
     
     // 非同期処理の完了を監視するオブジェクトを作成
     XCTestExpectation *expectation = [self expectationWithDescription:caseName];
-    expectation.expectedFulfillmentCount = [LineIdentifiers count];
+    //expectation.expectedFulfillmentCount = [LineIdentifiers count];
+    expectation.expectedFulfillmentCount = 1;
     
     for(int p=0; p<[LineIdentifiers count]; p++){
         NSString *LineIdentifier = LineIdentifiers[p];
@@ -355,6 +358,7 @@
             [expectation fulfill];
             
         }];
+        break;
     }
     
     // 指定秒数（120秒）待つ
@@ -519,12 +523,15 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     
-    
-    NSArray *LineIdentifiers = @[@"odpt.Railway:JR-East.JobanRapid.1.1"];
-    NSArray *StationIdentifiers = @[@"odpt.Station:JR-East.JobanRapid.Shimbashi"];
-    NSArray *checkDateStr = @[@"2019-10-18 09:00" // Friday
+
+    NSArray *LineIdentifiers = @[@"odpt.Railway:JR-East.JobanRapid.1.1",
+                                 @"odpt.Railway:TokyoMetro.Chiyoda.1.1"];
+    NSArray *StationIdentifiers = @[@"odpt.Station:JR-East.JobanRapid.Shimbashi",
+                                    @"odpt.Station:TokyoMetro.Chiyoda.Hibiya"];
+    NSArray *checkDateStr = @[@"2019-10-18 09:00", // Friday
+                              @"2019-10-18 09:00" // Friday
                               ];
-    
+
     // 非同期処理の完了を監視するオブジェクトを作成
     XCTestExpectation *expectation = [self expectationWithDescription:caseName];
     expectation.expectedFulfillmentCount = [LineIdentifiers count];
@@ -538,6 +545,7 @@
         [dataSource requestWithOwner:nil TrainTimetableOfLine:LineIdentifier atStation:StationIdentifier atDepartureTime:d Block:^(NSArray<NSDictionary *> *ary) {
         
             XCTAssertFalse([ary count] == 0, @"error.");
+            // NSLog(@"ans: %@", ary);
             
             NSMutableArray *answer = [[NSMutableArray alloc] init];
             for(int i=0; i<[ary count]; i++){
@@ -565,13 +573,14 @@
             if([rightAnswer judgeAnswer:answer forQuery:q] == NO){
                 XCTAssertFalse(YES, @"answer is wrong or not Found. Query:%@ ", q);
             }
+            NSLog(@"xy: %d", p);
             [expectation fulfill];
         }];
         
     }
     
     // 指定秒数待つ
-    [self waitForExpectations:@[expectation] timeout:30.0f enforceOrder:NO];
+    [self waitForExpectations:@[expectation] timeout:10.0f enforceOrder:NO];
 }
 
 - (void)testRequestStationTimeTable{

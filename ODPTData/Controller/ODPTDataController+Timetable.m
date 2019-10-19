@@ -12,6 +12,7 @@
 #import "ODPTDataLoaderArray.h"
 #import "ODPTDataLoaderCalendar.h"
 #import "ODPTDataLoaderTrainType.h"
+#import "ODPTDataLoaderTimetableVehicle.h"
 #import "EfficientLoaderQueue.h"
 
 @implementation ODPTDataController (Timetable)
@@ -76,8 +77,8 @@
 
 - (void)requestWithOwner:(id _Nullable)owner TrainTimetableOfLine:(NSString *)lineIdentifier atStation:(NSString *)stationIdentifier atDepartureTime:(NSDate *)departureTime Block:(void (^)(NSArray<NSDictionary *> * _Nullable))block {
     
-    __block NSMutableArray *ret = [[NSMutableArray alloc] init];
-    
+        
+        
     if(departureTime == nil){
         // メインスレッドで実行。
         dispatch_async(
@@ -106,6 +107,9 @@
         
         NSManagedObjectContext *moc = [self->APIDataManager managedObjectContextForConcurrent];
         
+        __block NSMutableArray *loadIdents = [[NSMutableArray alloc] init];
+        __block BOOL lastFlag = NO;
+        
         [moc performBlockAndWait:^{
             
             NSManagedObject *timetableSetObj = [moc objectWithID:moID]; //  entity: TimetableLineSet
@@ -133,7 +137,7 @@
                 for(int j=0; j<[timetableLines count]; j++){
                     NSManagedObject *calendarObject = [timetableLines[j] valueForKey:@"calendar"];
                     NSString *calendarIdent = [calendarObject valueForKey:@"identifier"];
-                    NSLog(@"xx ci:%@", calendarIdent);
+                    //NSLog(@"xx ci:%@", calendarIdent);
                     
                     if([calendarIdent isEqualToString:hitCalendarIdent] == YES){
                         timetableObj = timetableLines[j];
@@ -201,25 +205,112 @@
                 for(; i<self.searchCountOfTimetable; i++){
                     if(p+i < [sortedVehicles count]){
                         NSManagedObject *vehicle = sortedVehicles[p+i];
-                        NSDictionary *dict = [job dictionaryForTrainTimetable:vehicle];
-                        [ret addObject:dict];
+                        /*
+                        NSNumber *flag = [vehicle valueForKey:@"isValidReference"];
+                        if([flag boolValue] == NO){
+                            NSString *ttIdent = [vehicle valueForKey:@"identifier"];
+                            [loadIdents addObject:ttIdent];
+                        }
+                         */
+                        NSString *ttIdent = [vehicle valueForKey:@"identifier"];
+                        [loadIdents addObject:ttIdent];
+                        
                     }
                 }
                 
                 if(p+i >= [sortedVehicles count]){
-                    NSDictionary *dict = @{@"last":[NSNumber numberWithBool:YES]};
-                    [ret addObject:dict];
+                    lastFlag = YES;
                 }
             }
             
         }];
         
-        // メインスレッドで実行。
-        dispatch_async(
-                       dispatch_get_main_queue(),
-                       ^{
-                           block([ret copy]);
-                       });
+        NSMutableArray *loaders = [[NSMutableArray alloc] init];
+        
+        for(int i=0; i<[loadIdents count]; i++){
+            NSString *ttIdent = loadIdents[i];
+            ODPTDataLoaderTimetableVehicle *l = [[ODPTDataLoaderTimetableVehicle alloc] initWithTimetableVehicle:ttIdent Block:nil];
+            [loaders addObject:l];
+        }
+        
+        
+        ODPTDataLoaderArray *job3 = [[ODPTDataLoaderArray alloc] initWithLoaders:loaders Block:^(NSArray<NSManagedObjectID *> *ary) {
+            
+            // 再帰呼び出しされるメソッド
+            __block NSMutableArray *retVehicleObjs = nil;
+            
+            __block void (^recursive)(NSManagedObject *) = ^(NSManagedObject *vehicleObj) {
+                
+                NSNumber *validFlag = [vehicleObj valueForKey:@"isValidReference"];
+                if([validFlag boolValue] == NO){
+                    NSLog(@"WARNING!!  detect timetableVehicle object which have invalid Reference. %@", [vehicleObj valueForKey:@"identifier"]);
+                    return;
+                }
+                
+                NSOrderedSet *ttSet = [vehicleObj valueForKey:@"referenceTimetable"];
+                
+                for(int i=0; i<[ttSet count]; i++){
+                    NSManagedObject *refTt = [ttSet objectAtIndex:i];
+                    NSString *ident = [refTt valueForKey:@"identifier"];
+                    
+                    BOOL recFlag = YES;
+                    for(int j=0; j<[retVehicleObjs count]; j++){
+                        NSManagedObject *t = [retVehicleObjs objectAtIndex:j];
+                        NSString *sIdent = [t valueForKey:@"identifier"];
+                        if([ident isEqualToString:sIdent] == YES){
+                            // すでに読み込み済み。次へ。
+                            recFlag = NO;
+                            break;
+                        }
+                    }
+                    
+                    if(recFlag == YES){
+                        [retVehicleObjs addObject:refTt];
+                        recursive(refTt);
+                    }
+                }
+            };
+            
+            __block NSMutableArray *ret = [[NSMutableArray alloc] init];
+            NSManagedObjectContext *moc = [self->APIDataManager managedObjectContextForConcurrent];
+            
+            [moc performBlockAndWait:^{
+                for(int i=0; i<[ary count]; i++){
+                    NSManagedObjectID *moID = ary[i];
+                    
+                    NSManagedObject *vehicleObj = [moc objectWithID:moID];
+                    // NSLog(@"vehicle:%@", [vehicleObj valueForKey:@"identifier"]);
+                    
+                    // 関連する時刻表オブジェクトを重複無しで全て取得し、配列に格納。再帰的処理。
+                    retVehicleObjs = [[NSMutableArray alloc] init];
+                    [retVehicleObjs addObject:vehicleObj];
+                    recursive(vehicleObj);
+                    
+                    NSDictionary *dict = [job dictionaryForTrainTimetables:retVehicleObjs];
+                    
+                    [ret addObject:dict];
+                }
+            }];
+            
+            if(lastFlag == YES){
+                NSDictionary *dict = @{@"last":[NSNumber numberWithBool:YES]};
+                [ret addObject:dict];
+            }
+            
+            // メインスレッドで実行。
+            dispatch_async(
+                           dispatch_get_main_queue(),
+                           ^{
+                               block([ret copy]);
+                           });
+        }];
+        
+        job3.dataProvider = self->dataProvider;
+        job3.dataManager = self->APIDataManager;
+        [job3 setParent:job];
+        
+        [self->queue addLoader:job3];        
+        
     }];
     
     job.dataProvider = self->dataProvider;

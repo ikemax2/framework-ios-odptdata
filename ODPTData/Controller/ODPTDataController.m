@@ -77,7 +77,7 @@
 - (NSInteger)APICacheVersion{
     // APICacheは Migrationを提供しない。
     // 起動時, UserDefault に記載のversion と一致しない場合に強制的にreflesh する。
-    return 4;
+    return 5;
 }
 
 - (void)prepare{

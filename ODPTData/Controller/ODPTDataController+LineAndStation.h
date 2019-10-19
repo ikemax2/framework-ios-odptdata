@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)requestWithOwner:(id _Nullable)owner StationIdentifiersForLine:(NSString *)LineIdentifier Block:(void (^)(NSArray<NSString *>* _Nullable))block;
 
-- (void)requestWithOwner:(id _Nullable)owner StationLocationsForLineArray:(NSArray<NSString *> *)LineIdentifiers Block:(void (^)(NSArray * _Nullable))block;
+- (void)requestWithOwner:(id _Nullable)owner StationDictsForLineArray:(NSArray<NSString *> *)LineIdentifiers Block:(void (^)(NSArray * _Nullable))block;
 
 - (void)requestWithOwner:(id _Nullable)owner ColorForLine:(NSString *)LineIdentifier Block:(void (^)(UIColor * _Nullable))block;
 
@@ -31,7 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)requestWithOwner:(id _Nullable)owner NearLinesAtPoint:(CLLocationCoordinate2D)point ofRailway:(BOOL)loadRailway ofBus:(BOOL)loadBus withSearchRadius:(int)radius Block:(void (^)(NSArray * _Nullable, NSArray * _Nullable))block;
 
-- (void)requestWithOwner:(id _Nullable)owner LineTitleForIdentifier:(NSString * _Nullable)identifierOriginal Block:(void (^)(NSString *))block ;
+- (void)requestWithOwner:(id _Nullable)owner LineTitleForIdentifier:(NSString *)LineIdentifier Block:(void (^)(NSString * _Nullable))block ;
+- (void)requestWithOwner:(id)owner LineTitleForIdentifierArray:(NSArray<NSString *> *)identifiers Block:(void (^)(NSArray<NSString *> *))block;
 
 - (void)requestWithOwner:(id _Nullable)owner StationTitleForIdentifier:(NSString *)identifier Block:(void (^)(NSString * _Nullable))block;
 
@@ -56,6 +57,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 // 未使用
 - (void)requestWithOwner:(id _Nullable)owner DirectConnectingLinesForStation:(NSString *)StationIdentifier OfLine:(NSString *)LineIdentifier Block:(void (^)(NSArray * _Nullable))block ;
+
+- (void)requestWithOwner:(id _Nullable)owner IntegratedReverseDirectionLineForLine:(NSString *)LineIdentifier atStation:(NSDictionary *)startStationDict withBranchData:(NSArray * _Nullable)branchData Block:(void (^)(NSString * _Nullable, NSDictionary * _Nullable))block;
 
 - (void)requestWithOwner:(id _Nullable)owner ReverseDirectionLineForLine:(NSString *)LineIdentifier Block:(void (^)(NSString * _Nullable))block;
 
